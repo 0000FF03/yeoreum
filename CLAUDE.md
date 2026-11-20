@@ -28,10 +28,11 @@
   `git push origin main && git push origin main:gh-pages`
 - 반영까지 1~2분
 
+## 주소
+- 라이브: https://0000ff03.github.io/yeoreum/
+- 저장소: https://github.com/0000FF03/yeoreum (2026-11-21에 `-`에서 이름 변경. 예전 Pages 주소 `/-/`는 404)
+- 로컬 작업 폴더: `Documents\yeoreum` (Windows, Git·gh 설치·로그인됨)
+
 ## 남은 일
-- 저장소는 지금 것(`0000FF03/-`)을 그대로 쓰되, **이름만 `-` → `yeoreum`으로 변경** (사용자가 원함)
-  - GitHub Settings → Repository name → Rename, 또는 `gh repo rename yeoreum -R 0000FF03/-`
-  - 변경 후 `git remote set-url origin https://github.com/0000FF03/yeoreum.git`
-  - 새 주소 https://0000ff03.github.io/yeoreum/ 에서 5개 페이지 확인 (반영 1~2분). 예전 주소 `/-/`는 끊길 수 있음
 - 3D 신혼집 가구 색(초록 매트, 분홍 침대)이 아직 예전 팝 톤 — 청첩장 톤으로 맞출지 사용자에게 확인
 - 일러스트 사용 권한 확인 필요 (오른쪽 아래 서명 있음)
