@@ -72,10 +72,15 @@ async function flood() {
   const mine = ++token;
   log.replaceChildren(); choicesEl.replaceChildren(); lastFrom = '';
   if (document.querySelector('.glitch')) await sleep(3600); // 전환 화면이 걷힌 뒤에 시작
-  for (const line of hidden.flood) {
+  // 끝없이 무작위로 보냄. 같은 말이 연달아 나오지 않게 하고, 오래된 메시지는 지워서 가볍게 유지
+  let prev = '';
+  for (;;) {
     await sleep(1400);
     if (mine !== token) return;
-    say(stamp(line));
+    const pool = hidden.flood.filter((l) => l !== prev);
+    prev = pool[Math.floor(Math.random() * pool.length)];
+    say(stamp(prev));
+    while (log.children.length > 60) log.firstChild.remove();
   }
 }
 function start() {
