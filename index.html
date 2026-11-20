@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>한여름</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="sheet">
+<main>
+<section class="cover pad">
+  <p class="std">Save the Date</p>
+  <p class="sub">WEDDING INVITATION</p>
+  <div class="arch"><img id="pic" alt="한여름 일러스트"></div>
+  <p class="names"><span id="bride"></span><i>♥</i><span id="groom"></span></p>
+  <p class="date" id="date"></p>
+  <h1 id="h1"></h1>
+</section>
+
+<section class="sec pad">
+  <p class="eyebrow">Invitation</p>
+  <h2>모시는 글</h2>
+  <p class="poem" id="poem"></p>
+  <p class="sign">신부<b id="sign"></b> 올림</p>
+</section>
+
+<section class="sec pad tint">
+  <p class="eyebrow">Bride &amp; Groom</p>
+  <h2>신부와 신랑</h2>
+  <div class="couple">
+    <div class="person"><small id="r1"></small><b id="n1"></b><span id="d1"></span></div>
+    <div class="person groom"><small id="r2"></small><b id="n2"></b><span id="d2"></span></div>
+  </div>
+  <a class="more" href="profile.html">신부 소개 자세히 보기</a>
+</section>
+
+<section class="sec pad">
+  <p class="eyebrow">Calendar</p>
+  <p class="cal-head" id="calhead"></p>
+  <div class="cal" id="cal"></div>
+  <div class="count" id="count"></div>
+  <p class="dday" id="dday"></p>
+</section>
+
+<section class="sec pad tint rsvp">
+  <p class="eyebrow">R.S.V.P.</p>
+  <h2>참석 여부를 알려주세요</h2>
+  <p class="lead">자기 자리는 이미 맨 앞줄에 준비해뒀어요.</p>
+  <div class="btns"><button class="btn" id="yes" type="button" aria-pressed="false">참석할게요</button><button class="btn" id="no" type="button" aria-pressed="false">못 가요</button></div>
+  <p class="reply" id="reply" aria-live="polite"></p>
+</section>
+
+<section class="sec pad">
+  <p class="eyebrow">Location</p>
+  <h2>오시는 길</h2>
+  <div class="map" aria-label="실시간 위치 지도">
+    <div class="mk" style="left:62%;top:44%"><i></i><span>자기 (실시간)</span></div>
+    <div class="mk her" style="left:40%;top:70%"><i></i><span>여름 (3m 뒤)</span></div>
+  </div>
+  <dl class="way" id="way"></dl>
+  <div class="btns"><a class="btn fill" href="room.html">신혼집 미리보기</a><a class="btn" href="chat.html">신부에게 연락하기</a></div>
+</section>
+
+<section class="sec pad tint">
+  <p class="eyebrow">Gallery</p>
+  <h2>우리의 순간들</h2>
+  <div class="thumbs" id="thumbs"></div>
+  <a class="more" href="gallery.html">갤러리 전체 보기</a>
+</section>
+
+<section class="sec pad">
+  <p class="eyebrow">With Heart</p>
+  <h2>마음 전하실 곳</h2>
+  <div class="gift" id="gift"></div>
+  <button class="btn" id="send" type="button">마음 보내기</button>
+  <p class="toast" id="toast" aria-live="polite"></p>
+</section>
+</main>
+</div>
+<script type="module">
+import { setAvatar } from './js/common.js';
+import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+const $ = (s) => document.getElementById(s);
+const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+$('pic').src = c.image;
+$('bride').textContent = invite.bride.name;
+$('groom').textContent = invite.groom.name;
+$('date').textContent = invite.dateText;
+const h = $('h1'); h.append(c.hero[0], document.createElement('br'), mk('em', '', c.hero[1]));
+invite.greeting.forEach((l) => $('poem').appendChild(mk('span', '', l)));
+$('sign').textContent = invite.bride.name;
+[['1', invite.bride], ['2', invite.groom]].forEach(([n, p]) => { $('r' + n).textContent = p.role; $('n' + n).textContent = p.name; $('d' + n).textContent = p.desc; });
+
+// 달력 + 카운트다운
+const [Y, M, D, hh, mm] = invite.date;
+$('calhead').textContent = `${Y}. ${String(M).padStart(2, '0')}`;
+const cal = $('cal');
+['일', '월', '화', '수', '목', '금', '토'].forEach((d, i) => cal.appendChild(mk('span', 'dow' + (i === 0 ? ' sun' : ''), d)));
+const first = new Date(Y, M - 1, 1).getDay(), days = new Date(Y, M, 0).getDate();
+for (let i = 0; i < first; i++) cal.appendChild(mk('span'));
+for (let d = 1; d <= days; d++) {
+  const s = mk('span', (new Date(Y, M - 1, d).getDay() === 0 ? 'sun' : ''));
+  if (d === D) { s.classList.add('day'); s.appendChild(mk('b', '', d)); s.setAttribute('aria-label', `${d}일 결혼식`); } else s.textContent = d;
+  cal.appendChild(s);
+}
+const target = new Date(Y, M - 1, D, hh, mm);
+const units = [['DAYS', 86400000], ['HOUR', 3600000], ['MIN', 60000], ['SEC', 1000]];
+const cells = units.map(([u]) => { const d = mk('div'); const b = mk('b', '', '0'); d.append(b, mk('small', '', u)); $('count').appendChild(d); return b; });
+function tick() {
+  let ms = Math.max(0, target - Date.now());
+  units.forEach(([, size], i) => { const v = Math.floor(ms / size); cells[i].textContent = i ? String(v).padStart(2, '0') : v; ms -= v * size; });
+  const left = Math.ceil((target - Date.now()) / 86400000);
+  $('dday').replaceChildren(`${invite.bride.name} ♥ ${invite.groom.name}의 결혼식이 `, mk('b', '', left > 0 ? `${left}일` : '오늘'), left > 0 ? ' 남았습니다. (사귄 지는 0일)' : '이에요!');
+}
+tick(); setInterval(tick, 1000);
+
+// 참석 여부
+const yes = $('yes'), no = $('no'), reply = $('reply');
+function pick(b) { yes.setAttribute('aria-pressed', String(b === yes)); no.setAttribute('aria-pressed', String(b === no)); }
+let noCount = 0, noTimer = 0;
+yes.onclick = () => { clearTimeout(noTimer); pick(yes); reply.textContent = invite.rsvpYes; };
+no.onclick = () => {
+  const [first, then] = invite.rsvpNo[noCount++ % invite.rsvpNo.length];
+  clearTimeout(noTimer);
+  pick(no); reply.textContent = first;
+  noTimer = setTimeout(() => { pick(yes); reply.textContent = first + ' ' + then; }, 1200);
+};
+
+// 오시는 길
+invite.way.forEach(([k, v]) => { const d = mk('div'); d.append(mk('dt', '', k), mk('dd', '', v)); $('way').appendChild(d); });
+
+// 갤러리 미리보기
+gallery.slice(0, 3).forEach((g) => {
+  const a = mk('a'); a.href = 'gallery.html'; a.setAttribute('aria-label', g.title);
+  if (g.src) { const i = mk('img'); i.src = g.src; i.alt = ''; a.appendChild(i); }
+  else { a.style.background = `linear-gradient(150deg, ${g.c[0]}, ${g.c[1]})`; a.textContent = g.e; }
+  $('thumbs').appendChild(a);
+});
+
+// 마음 전하실 곳
+invite.gift.forEach(([side, name, note]) => { const d = mk('div'); const r = mk('p'); r.append(mk('b', '', name), mk('span', '', note)); d.append(mk('small', '', side), r); $('gift').appendChild(d); });
+$('send').onclick = () => { $('toast').textContent = invite.giftReply; };
+</script>
+</body>
+</html>

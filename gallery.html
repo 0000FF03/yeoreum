@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>갤러리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="sheet">
+<main>
+<section class="sec pad">
+  <p class="eyebrow">Gallery</p>
+  <h2>우리의 순간들</h2>
+  <p class="lead">누르면 크게 볼 수 있어요.</p>
+  <div class="gal" id="gal"></div>
+</section>
+<div class="lightbox" id="lb" hidden><div class="big" id="big"></div></div>
+</main>
+</div>
+<script type="module">
+import { setAvatar } from './js/common.js';
+import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+const $ = (s) => document.getElementById(s);
+const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const lb = $('lb'), big = $('big');
+function fill(el, g) {
+  el.replaceChildren();
+  if (g.src) { const i = mk('img'); i.src = g.src; i.alt = g.title; el.appendChild(i); }
+  else { const t = mk('div', 'tile', g.e); t.style.background = `linear-gradient(150deg, ${g.c[0]}, ${g.c[1]})`; el.appendChild(t); }
+  el.appendChild(mk('span', 'cap', g.title));
+}
+gallery.forEach((g) => { const b = mk('button'); b.type = 'button'; fill(b, g); b.onclick = () => { fill(big, g); lb.hidden = false; }; $('gal').appendChild(b); });
+lb.onclick = () => { lb.hidden = true; };
+addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.hidden = true; });
+</script>
+</body>
+</html>

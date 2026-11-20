@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>연락하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="sheet">
+<main>
+<section class="sec pad">
+  <p class="eyebrow">Contact</p>
+  <h2>신부에게 연락하기</h2>
+  <p class="lead">아래 선택지 중 하나를 골라 먼저 말을 걸어보세요. 어떤 말을 해도 신부는 긍정적으로 해석해요. 정해진 대사로만 이어지는 연출용 대화예요.</p>
+  <div class="chat">
+    <div class="bar"><div class="ava" id="ava"></div><div><b id="who"></b><small>활동 중 · 너 근처</small></div><button class="btn reset" id="reset" type="button">처음부터</button></div>
+    <div class="log" id="log" aria-live="polite"></div>
+    <div class="choices" id="choices"></div>
+  </div>
+</section>
+</main>
+</div>
+<script type="module">
+import { setAvatar } from './js/common.js';
+import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+const $ = (s) => document.getElementById(s);
+const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+setAvatar($('ava'));
+$('who').textContent = '신부 ' + c.name;
+const log = $('log'), choicesEl = $('choices');
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let token = 0, lastFrom = '';
+const scroll = () => { log.scrollTop = log.scrollHeight; };
+function say(text) {
+  if (text.startsWith('*')) { log.appendChild(mk('div', 'act', text.replace(/\*/g, '').trim())); lastFrom = 'act'; scroll(); return; }
+  const row = mk('div', 'row c');
+  const a = mk('div', lastFrom === 'c' ? 'ava ghost' : 'ava'); setAvatar(a);
+  row.append(a, mk('div', 'msg', text));
+  log.appendChild(row); lastFrom = 'c'; scroll();
+}
+function me(text) { log.querySelector('.empty')?.remove(); const row = mk('div', 'row u'); row.appendChild(mk('div', 'msg', text)); log.appendChild(row); lastFrom = 'u'; scroll(); }
+async function play(id) {
+  const mine = ++token;
+  const node = chat.nodes[id];
+  choicesEl.replaceChildren();
+  if (!log.children.length) log.appendChild(mk('p', 'empty', '아직 대화가 없어요. 아래에서 먼저 말을 걸어보세요.'));
+  for (const line of node.say) {
+    const t = mk('div', 'typing', '입력 중…');
+    log.appendChild(t); scroll();
+    await sleep(500 + line.length * 28);
+    t.remove();
+    if (mine !== token) return;
+    say(line);
+  }
+  node.choices.forEach((ch) => { const b = mk('button', 'btn', ch.t); b.type = 'button'; b.onclick = () => { me(ch.t); play(ch.next); }; choicesEl.appendChild(b); });
+}
+$('reset').onclick = () => { token++; log.replaceChildren(); lastFrom = ''; play(chat.start); };
+play(chat.start);
+</script>
+</body>
+</html>
