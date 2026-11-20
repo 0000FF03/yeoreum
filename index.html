@@ -6,13 +6,14 @@
 <title>한여름</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
 </head>
 <body>
 <div class="sheet">
 <main>
 <section class="cover pad">
-  <p class="std">Save the Date</p>
-  <p class="sub">WEDDING INVITATION</p>
+  <p class="std" data-watch="I See You">Save the Date</p>
+  <p class="sub" data-watch="LIVE · 24H">WEDDING INVITATION</p>
   <div class="arch"><img id="pic" alt="한여름 일러스트"></div>
   <p class="names"><span id="bride"></span><i>♥</i><span id="groom"></span></p>
   <p class="date" id="date"></p>
@@ -47,7 +48,7 @@
 <section class="sec pad tint rsvp">
   <p class="eyebrow">R.S.V.P.</p>
   <h2>참석 여부를 알려주세요</h2>
-  <p class="lead">자기 자리는 이미 맨 앞줄에 준비해뒀어요.</p>
+  <p class="lead" data-watch="거절 버튼은 고장 났어요. 제가 고장 냈어요.">자기 자리는 이미 맨 앞줄에 준비해뒀어요.</p>
   <div class="btns"><button class="btn" id="yes" type="button" aria-pressed="false">참석할게요</button><button class="btn" id="no" type="button" aria-pressed="false">못 가요</button></div>
   <p class="reply" id="reply" aria-live="polite"></p>
 </section>
@@ -57,7 +58,7 @@
   <h2>오시는 길</h2>
   <div class="map" aria-label="실시간 위치 지도">
     <div class="mk" style="left:62%;top:44%"><i></i><span>자기 (실시간)</span></div>
-    <div class="mk her" style="left:40%;top:70%"><i></i><span>여름 (3m 뒤)</span></div>
+    <div class="mk her" style="left:40%;top:70%"><i></i><span data-watch="여름 (바로 뒤)">여름 (3m 뒤)</span></div>
   </div>
   <dl class="way" id="way"></dl>
   <div class="btns"><a class="btn fill" href="room.html">신혼집 미리보기</a><a class="btn" href="chat.html">신부에게 연락하기</a></div>
@@ -80,16 +81,21 @@
 </main>
 </div>
 <script type="module">
-import { setAvatar } from './js/common.js';
-import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+import './js/common.js';
+import { character as c, gallery, invite, hidden } from './js/config.js';
+import { onTheme, trigger } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 $('pic').src = c.image;
 $('bride').textContent = invite.bride.name;
 $('groom').textContent = invite.groom.name;
 $('date').textContent = invite.dateText;
-const h = $('h1'); h.append(c.hero[0], document.createElement('br'), mk('em', '', c.hero[1]));
-invite.greeting.forEach((l) => $('poem').appendChild(mk('span', '', l)));
+// 표지 문구와 모시는 글은 히든 테마에서 다른 버전으로 바뀜
+onTheme((watch) => {
+  const hero = watch ? hidden.hero : c.hero;
+  $('h1').replaceChildren(hero[0], document.createElement('br'), mk('em', '', hero[1]));
+  $('poem').replaceChildren(...(watch ? hidden.greeting : invite.greeting).map((l) => mk('span', '', l)));
+});
 $('sign').textContent = invite.bride.name;
 [['1', invite.bride], ['2', invite.groom]].forEach(([n, p]) => { $('r' + n).textContent = p.role; $('n' + n).textContent = p.name; $('d' + n).textContent = p.desc; });
 
@@ -125,7 +131,11 @@ no.onclick = () => {
   const [first, then] = invite.rsvpNo[noCount++ % invite.rsvpNo.length];
   clearTimeout(noTimer);
   pick(no); reply.textContent = first;
-  noTimer = setTimeout(() => { pick(yes); reply.textContent = first + ' ' + then; }, 1200);
+  const last = noCount % invite.rsvpNo.length === 0;
+  noTimer = setTimeout(() => {
+    pick(yes); reply.textContent = first + ' ' + then;
+    if (last) setTimeout(() => trigger('rsvp'), 1400); // 여섯 번을 다 누르면 히든 테마
+  }, 1200);
 };
 
 // 오시는 길

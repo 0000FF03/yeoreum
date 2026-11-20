@@ -6,6 +6,7 @@
 <title>신혼집</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
 </head>
 <body>
 <div class="sheet">
@@ -13,7 +14,7 @@
 <section class="sec pad">
   <p class="eyebrow">Our New Home</p>
   <h2>신혼집 미리보기</h2>
-  <p class="lead">이미 정해둔 신혼집이에요. 가구도 다 들여놨어요. 드래그하면 돌아가고, 번호를 누르면 신부가 설명해줘요.</p>
+  <p class="lead" data-watch="지금 보는 화면은 신혼집 10번 카메라예요. 9번까지는 자기 쪽에 있어요. 드래그하면 돌아가요.">이미 정해둔 신혼집이에요. 가구도 다 들여놨어요. 드래그하면 돌아가고, 번호를 누르면 신부가 설명해줘요.</p>
   <div class="stage3d" id="stage"><canvas id="canvas"></canvas><div id="pins"></div><p class="hint">드래그해서 둘러보세요</p></div>
   <div class="list" id="list"></div>
   <div class="say" aria-live="polite"><b id="sname">번호를 눌러보세요</b><p id="sline">신혼집 곳곳에 신부의 준비가 숨어 있어요. 우연히요.</p></div>
@@ -21,8 +22,9 @@
 </main>
 </div>
 <script type="module">
-import { setAvatar } from './js/common.js';
-import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+import './js/common.js';
+import { room } from './js/config.js';
+import { count } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 import { mountRoom } from './js/room.js';
@@ -32,6 +34,7 @@ const api = mountRoom($('canvas'), $('pins'), room, (id) => {
   $('sname').textContent = p.name;
   $('sline').textContent = p.line;
   Object.entries(btns).forEach(([k, b]) => b.classList.toggle('on', k === id));
+  if (id === 'drone') count('drone', 5); // 드론을 다섯 번 누르면 히든 테마
 });
 room.forEach((p, i) => { const b = mk('button', '', `${i + 1}. ${p.name}`); b.type = 'button'; b.onclick = () => api.select(p.id); btns[p.id] = b; $('list').appendChild(b); });
 </script>

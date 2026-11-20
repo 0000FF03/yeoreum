@@ -1,6 +1,7 @@
 import { site, character } from './config.js';
+import { initHidden } from './hidden.js';
 
-const pages = [['index.html', '청첩장'], ['profile.html', '신부 소개'], ['room.html', '신혼집'], ['chat.html', '연락하기'], ['gallery.html', '갤러리']];
+const pages = [['index.html', '청첩장'], ['profile.html', '신부 소개'], ['room.html', '신혼집'], ['collection.html', '수집품'], ['chat.html', '연락하기'], ['gallery.html', '갤러리']];
 const here = location.pathname.split('/').pop() || 'index.html';
 
 const sheet = document.querySelector('.sheet');
@@ -25,6 +26,8 @@ footer.querySelector('.b').textContent = `© ${character.en} · ${site.disclaime
 sheet.appendChild(footer);
 
 if (here !== 'index.html') document.title = `${document.title.split('|')[0].trim()} | ${site.title}`;
+
+initHidden(footer, pages.findIndex(([href]) => href === here) + 1 || 1);
 
 // 일러스트의 얼굴 부분을 아바타로 사용
 export function setAvatar(el) {

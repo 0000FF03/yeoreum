@@ -6,6 +6,7 @@
 <title>연락하기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
 </head>
 <body>
 <div class="sheet">
@@ -15,7 +16,7 @@
   <h2>신부에게 연락하기</h2>
   <p class="lead">아래 선택지 중 하나를 골라 먼저 말을 걸어보세요. 어떤 말을 해도 신부는 긍정적으로 해석해요. 정해진 대사로만 이어지는 연출용 대화예요.</p>
   <div class="chat">
-    <div class="bar"><div class="ava" id="ava"></div><div><b id="who"></b><small>활동 중 · 너 근처</small></div><button class="btn reset" id="reset" type="button">처음부터</button></div>
+    <div class="bar"><div class="ava" id="ava"></div><div><b id="who"></b><small data-watch="활동 중 · 바로 뒤">활동 중 · 너 근처</small></div><button class="btn reset" id="reset" type="button">처음부터</button></div>
     <div class="log" id="log" aria-live="polite"></div>
     <div class="choices" id="choices"></div>
   </div>
@@ -24,7 +25,8 @@
 </div>
 <script type="module">
 import { setAvatar } from './js/common.js';
-import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+import { character as c, chat } from './js/config.js';
+import { mark } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 setAvatar($('ava'));
@@ -54,6 +56,7 @@ async function play(id) {
     if (mine !== token) return;
     say(line);
   }
+  if (id !== chat.start) mark('chat', id, Object.keys(chat.nodes).length - 1); // 모든 장면을 보면 히든 테마
   node.choices.forEach((ch) => { const b = mk('button', 'btn', ch.t); b.type = 'button'; b.onclick = () => { me(ch.t); play(ch.next); }; choicesEl.appendChild(b); });
 }
 $('reset').onclick = () => { token++; log.replaceChildren(); lastFrom = ''; play(chat.start); };

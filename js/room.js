@@ -125,12 +125,14 @@ function makeBear() {
   g.add(ball(0.3, fur, 0, 0.98, 0.02));
   g.add(ball(0.12, fur, -0.22, 1.22, 0)); g.add(ball(0.12, fur, 0.22, 1.22, 0));
   g.add(ball(0.12, '#f4d9b4', 0, 0.92, 0.26, 1, 0.8, 0.8));
-  g.add(ball(0.04, '#2a1630', -0.1, 1.02, 0.27)); g.add(ball(0.04, '#2a1630', 0.1, 1.02, 0.27));
+  g.add(ball(0.04, '#2a1630', -0.1, 1.02, 0.27));
+  // 오른쪽 눈은 초소형 카메라: 조금 큰 렌즈 + 빨간 녹화등
+  g.add(ball(0.05, '#0c0a10', 0.1, 1.02, 0.27));
+  const rec = new THREE.Mesh(new THREE.SphereGeometry(0.014, 12, 10), new THREE.MeshBasicMaterial({ color: '#ff2f4f' }));
+  rec.position.set(0.1, 1.02, 0.318); g.add(rec);
   g.add(ball(0.04, '#2a1630', 0, 0.96, 0.36));
   g.add(ball(0.14, fur, -0.42, 0.45, 0.1, 1, 1.4, 1)); g.add(ball(0.14, fur, 0.42, 0.45, 0.1, 1, 1.4, 1));
   g.add(ball(0.16, fur, -0.22, 0.1, 0.3, 1, 0.8, 1.3)); g.add(ball(0.16, fur, 0.22, 0.1, 0.3, 1, 0.8, 1.3));
-  const sh = box(0.62, 0.45, 0.5, '#ff9fbd', 0, 0.45, 0.02); g.add(sh);
-  const h = heartMesh('#ffffff', 0.18); h.position.set(0, 0.46, 0.3); g.add(h);
   g.scale.setScalar(1.15);
   return g;
 }
