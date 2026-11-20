@@ -100,11 +100,11 @@ export function initHidden(footer, camNo) {
 
   apply(isWatch());
 
-  // 조건: 탭을 떠나면 제목이 바뀌고, 세 번 떠났다 돌아오면 켜짐
+  // 조건: 탭을 떠나면 제목이 바뀌고, 한 번 떠났다 돌아오면 켜짐
   let title = document.title;
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { title = document.title; document.title = hidden.awayTitle; }
-    else { document.title = title; count('away', 3); }
+    else { document.title = title; count('away', 1); }
   });
 
   // 조건: 5번째 방문마다 (브라우저를 새로 열 때마다 1번으로 셈)
