@@ -83,7 +83,7 @@
 <script type="module">
 import './js/common.js';
 import { character as c, gallery, invite, hidden } from './js/config.js';
-import { onTheme, trigger } from './js/hidden.js';
+import { onTheme, trigger, isWatch } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 $('pic').src = c.image;
@@ -127,7 +127,27 @@ const yes = $('yes'), no = $('no'), reply = $('reply');
 function pick(b) { yes.setAttribute('aria-pressed', String(b === yes)); no.setAttribute('aria-pressed', String(b === no)); }
 let noCount = 0, noTimer = 0;
 yes.onclick = () => { clearTimeout(noTimer); pick(yes); reply.textContent = invite.rsvpYes; };
+// 히든 테마에서는 '못 가요' 버튼이 조각나서 떨어지고, 참석만 남음
+function breakNo() {
+  clearTimeout(noTimer);
+  [['0 0, 58% 0, 40% 55%, 0 70%', -1], ['58% 0, 100% 0, 100% 100%, 62% 100%, 40% 55%', 1], ['0 70%, 40% 55%, 62% 100%, 0 100%', -0.3]].forEach(([clip, dir], i) => {
+    const s = mk('span', 'btn shard', no.textContent);
+    s.setAttribute('aria-hidden', 'true');
+    Object.assign(s.style, { left: no.offsetLeft + 'px', top: no.offsetTop + 'px', width: no.offsetWidth + 'px', height: no.offsetHeight + 'px', clipPath: `polygon(${clip})`, animationDelay: i * 70 + 'ms' });
+    s.style.setProperty('--dx', dir * 42 + 'px');
+    s.style.setProperty('--rot', dir * 38 + 'deg');
+    s.onanimationend = () => s.remove();
+    setTimeout(() => s.remove(), 1400); // 애니메이션이 안 도는 환경에서도 조각이 남지 않게
+    no.parentElement.appendChild(s);
+  });
+  no.disabled = true; no.classList.add('gone');
+  yes.setAttribute('aria-pressed', 'false');
+  reply.textContent = hidden.rsvpBroken[0];
+  noTimer = setTimeout(() => { pick(yes); reply.textContent = hidden.rsvpBroken.join(' '); }, 1300);
+}
+onTheme((watch) => { if (!watch) { no.disabled = false; no.classList.remove('gone'); } }); // 원래 테마로 돌아오면 버튼도 복구
 no.onclick = () => {
+  if (isWatch()) { breakNo(); return; }
   const [first, then] = invite.rsvpNo[noCount++ % invite.rsvpNo.length];
   clearTimeout(noTimer);
   pick(no); reply.textContent = first;

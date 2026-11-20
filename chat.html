@@ -25,8 +25,8 @@
 </div>
 <script type="module">
 import { setAvatar } from './js/common.js';
-import { character as c, chat } from './js/config.js';
-import { mark } from './js/hidden.js';
+import { character as c, chat, hidden } from './js/config.js';
+import { mark, onTheme, isWatch } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 setAvatar($('ava'));
@@ -59,8 +59,33 @@ async function play(id) {
   if (id !== chat.start) mark('chat', id, Object.keys(chat.nodes).length - 1); // 모든 장면을 보면 히든 테마
   node.choices.forEach((ch) => { const b = mk('button', 'btn', ch.t); b.type = 'button'; b.onclick = () => { me(ch.t); play(ch.next); }; choicesEl.appendChild(b); });
 }
-$('reset').onclick = () => { token++; log.replaceChildren(); lastFrom = ''; play(chat.start); };
-play(chat.start);
+// 히든 테마: 안내와 선택지가 사라지고, 여름이 혼자 메시지를 계속 보냄
+const lead = document.querySelector('.lead');
+const stamp = (text) => {
+  const d = new Date(), h = d.getHours();
+  return text
+    .replace('{time}', `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}시 ${d.getMinutes()}분`)
+    .replace('{date}', `${d.getMonth() + 1}월 ${d.getDate()}일`)
+    .replace('{day}', '일월화수목금토'[d.getDay()]);
+};
+async function flood() {
+  const mine = ++token;
+  log.replaceChildren(); choicesEl.replaceChildren(); lastFrom = '';
+  if (document.querySelector('.glitch')) await sleep(3600); // 전환 화면이 걷힌 뒤에 시작
+  for (const line of hidden.flood) {
+    await sleep(1400);
+    if (mine !== token) return;
+    say(stamp(line));
+  }
+}
+function start() {
+  const watch = isWatch();
+  lead.hidden = choicesEl.hidden = watch;
+  if (watch) { flood(); return; }
+  token++; log.replaceChildren(); lastFrom = ''; play(chat.start);
+}
+$('reset').onclick = start;
+onTheme(start);
 </script>
 </body>
 </html>
