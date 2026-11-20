@@ -63,7 +63,7 @@ $('name').textContent = c.name;
 $('tagline').textContent = c.tagline;
 c.tags.forEach((t) => $('tags').appendChild(mk('span', '', '#' + t)));
 c.facts.forEach(([k, v]) => { const d = mk('div'); d.append(mk('dt', '', k), mk('dd', '', v)); $('facts').appendChild(d); });
-c.traits.forEach(([, t, d]) => { const k = mk('div'); k.append(mk('b', '', t), mk('p', '', d)); $('traits').appendChild(k); });
+c.traits.forEach(([t, d]) => { const k = mk('div'); k.append(mk('b', '', t), mk('p', '', d)); $('traits').appendChild(k); });
 world.translator.forEach(([a, b]) => { const r = mk('div'); r.append(mk('s', '', a), mk('i'), mk('b', '', b)); $('trans').appendChild(r); });
 world.watch.forEach((w) => $('watch').appendChild(mk('li', '', w)));
 $('wnote').textContent = world.watchNote;

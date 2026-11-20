@@ -34,8 +34,6 @@ nav a.on { color: var(--ink); border-bottom-color: var(--gold); }
 .eyebrow { font-family: var(--script); font-size: 32px; color: var(--gold); line-height: 1; }
 .sec h2 { font-family: var(--serif); font-weight: 700; font-size: 20px; letter-spacing: .14em; margin: 8px 0 30px; text-wrap: balance; }
 .lead { color: var(--mute); font-size: 15px; max-width: 34ch; margin: 0 auto 28px; text-wrap: balance; }
-.orn { display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--gold); font-size: 12px; margin: 26px 0; }
-.orn::before, .orn::after { content: ''; width: 46px; height: 1px; background: var(--gold); opacity: .6; }
 .btn { display: inline-block; font: 15px var(--body); padding: 10px 24px; border: 1px solid var(--gold); color: var(--ink); background: transparent; cursor: pointer; letter-spacing: .06em; transition: background .15s, color .15s; }
 .btn:hover, .btn[aria-pressed="true"] { background: var(--gold); color: #fff; }
 .btn.fill { background: var(--ink); color: var(--paper); border-color: var(--ink); }
