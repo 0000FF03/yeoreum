@@ -1,7 +1,7 @@
 import { site, character, faces, faceDefault } from './config.js';
 import { initHidden } from './hidden.js';
 
-const pages = [['index.html', '청첩장'], ['profile.html', '신부 소개'], ['room.html', '신혼집'], ['collection.html', '수집품'], ['chat.html', '연락하기'], ['gallery.html', '갤러리']];
+const pages = [['index.html', '청첩장'], ['profile.html', '신부 소개'], ['room.html', '신혼집'], ['collection.html', '수집품'], ['chat.html', '연락하기'], ['gallery.html', '갤러리'], ['webtoon.html', '웹툰']];
 const here = location.pathname.split('/').pop() || 'index.html';
 
 const sheet = document.querySelector('.sheet');

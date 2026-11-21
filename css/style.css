@@ -271,3 +271,22 @@ footer p + p { margin-top: 4px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
 .lightbox[hidden] { display: none; }
 .empty { margin: auto; text-align: center; font-size: 13px; color: var(--mute); padding: 0 20px; }
+
+/* 웹툰 */
+.wt-head h2 small { display: block; font-size: 13px; letter-spacing: .2em; color: var(--gold); margin-bottom: 6px; }
+.wt-head .lead { margin-bottom: 0; }
+.wt { display: flex; flex-direction: column; gap: 56px; padding: 8px 0 72px; }
+.cut { display: flex; flex-direction: column; gap: 10px; }
+.cut img { width: 100%; display: block; border-block: 1px solid var(--line); margin-bottom: 8px; }
+.cut .ph { aspect-ratio: 3 / 2; margin: 0 20px 8px; display: grid; place-content: center; gap: 6px; text-align: center; border: 1px dashed var(--gold); background: repeating-linear-gradient(135deg, var(--paper2) 0 10px, var(--paper) 10px 20px); }
+.cut .ph b { font-family: var(--serif); letter-spacing: .2em; color: var(--gold); }
+.cut .ph span { padding: 0 20px; font-size: 15px; }
+.cut .ph small { color: var(--mute); font-size: 12px; }
+.cut p { margin: 0 20px; max-width: 78%; padding: 9px 15px; border: 1px solid var(--line); font-size: 15px; line-height: 1.7; }
+.cut p.y { align-self: flex-start; background: var(--paper2); border-radius: 2px 16px 16px 16px; }
+.cut p.u { align-self: flex-end; background: var(--rose-soft); border-color: var(--rose-line); border-radius: 16px 2px 16px 16px; }
+.cut p.n { align-self: center; max-width: 86%; border: 0; padding: 2px 0; text-align: center; font-family: var(--serif); color: var(--mute); }
+.wt-end .lead { margin-bottom: 0; }
+/* 히든 테마: 자기 대사는 지워짐 */
+:root[data-theme="watch"] .cut img { filter: grayscale(.7) contrast(1.1) brightness(.7); }
+:root[data-theme="watch"] .cut p.u { text-decoration: line-through; opacity: .45; }
