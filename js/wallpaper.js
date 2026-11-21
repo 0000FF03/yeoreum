@@ -1,4 +1,4 @@
-// 움직이는 일러스트(가짜 Live2D): 한 장짜리 그림을 격자로 나눠 숨쉬기·흔들림·고개 기울기·눈 깜빡임을 준다.
+// 움직이는 일러스트(가짜 Live2D): 한 장짜리 그림을 격자로 나눠 베일과 드레스 자락을 나부끼게 하고, 눈 감은 그림이 있으면 깜빡임을 준다.
 import * as THREE from '../vendor/three.module.js';
 
 // 그림 안에서의 위치 (0~1, 왼쪽 아래 기준). 다른 그림으로 바꾸면 이 값만 다시 맞추면 된다.
@@ -15,29 +15,20 @@ varying vec2 vUv;
 void main() {
   vUv = uv;
   vec2 p = uv;                                  // 그림 좌표에서 변형한 뒤 화면 크기로 옮김
-  float up = smoothstep(0.0, 1.0, uv.y);
   float t = uTime;
-  // 몸 전체가 아래를 축으로 천천히 흔들림
-  p.x += (sin(t * 0.55) * 0.006 + uPointer.x * 0.010) * up * up * uMotion;
-  // 숨쉬기: 가슴과 어깨가 오르내림
-  float chest = smoothstep(0.42, 0.62, uv.y) * (1.0 - smoothstep(0.80, 0.95, uv.y));
-  float breath = sin(t * 1.5);
-  p.y += breath * 0.0045 * chest * uMotion;
-  p.x += (uv.x - 0.5) * breath * 0.004 * chest * uMotion;
-  // 고개: 목을 중심으로 살짝 돌고 마우스 쪽으로 기움
-  float head = smoothstep(0.71, 0.80, uv.y);
-  float ang = (sin(t * 0.42) * 0.012 + uPointer.x * 0.035) * head * uMotion;
-  vec2 d = (p - uNeck) * vec2(uAspect, 1.0);
-  d = vec2(d.x * cos(ang) - d.y * sin(ang), d.x * sin(ang) + d.y * cos(ang));
-  p = uNeck + d / vec2(uAspect, 1.0);
-  p.y += uPointer.y * 0.006 * head * uMotion;
-  // 머리카락과 베일 끝: 몸에서 멀수록 더 나부낌
-  float side = smoothstep(0.60, 1.0, uv.x) * smoothstep(0.15, 0.45, uv.y);
-  p.x += sin(t * 1.15 + uv.y * 7.0) * 0.007 * side * uMotion;
-  p.y += cos(t * 0.9 + uv.x * 6.0) * 0.004 * side * uMotion;
-  // 부케: 숨에 맞춰 살짝 따라 움직임
-  float bq = 1.0 - smoothstep(0.0, 0.24, distance(uv * vec2(uAspect, 1.0), uBouquet * vec2(uAspect, 1.0)));
-  p.y += sin(t * 1.5 - 0.6) * 0.003 * bq * uMotion;
+  // 몸·얼굴·부케는 그대로 두고, 바람을 받는 천(베일과 드레스 자락)만 나부끼게 한다.
+  // 오른쪽으로 날리는 베일: 몸에서 멀수록 크게
+  float veilR = smoothstep(0.64, 0.92, uv.x) * smoothstep(0.50, 0.60, uv.y) * (1.0 - smoothstep(0.80, 0.90, uv.y));
+  p.x += sin(t * 1.1 + uv.y * 9.0) * 0.008 * veilR * uMotion;
+  p.y += cos(t * 0.85 + uv.x * 7.0) * 0.005 * veilR * uMotion;
+  // 왼쪽 어깨 뒤로 내려온 베일: 살짝만
+  float veilL = (1.0 - smoothstep(0.26, 0.38, uv.x)) * smoothstep(0.60, 0.68, uv.y) * (1.0 - smoothstep(0.84, 0.90, uv.y));
+  p.x += sin(t * 0.95 + uv.y * 8.0 + 1.3) * 0.004 * veilL * uMotion;
+  // 드레스 자락: 허리 아래에서 시작해 아래로 갈수록 크게 물결침 (부케에서 늘어진 잎 쪽은 제외)
+  float skirt = (1.0 - smoothstep(0.26, 0.42, uv.y)) * smoothstep(0.20, 0.36, uv.x);
+  float low = 1.0 - smoothstep(0.0, 0.42, uv.y);
+  p.x += sin(t * 0.8 + uv.y * 10.0 + uv.x * 3.0) * 0.007 * skirt * (0.35 + low) * uMotion;
+  p.y += sin(t * 0.65 + uv.x * 8.0) * 0.003 * skirt * low * uMotion;
   // 평면이 1x1 크기라 그림 좌표에서 0.5를 빼면 그대로 꼭짓점 위치가 된다 (크기는 mesh.scale이 맡음)
   gl_Position = projectionMatrix * modelViewMatrix * vec4(p - 0.5, 0.0, 1.0);
 }`;

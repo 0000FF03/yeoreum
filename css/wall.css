@@ -14,6 +14,8 @@
 /* 히든 테마: 같은 장면을 감시 카메라 화면처럼 */
 :root[data-theme="watch"] .wall > .bg { filter: grayscale(.7) brightness(.42) contrast(1.2) sepia(.3) hue-rotate(80deg); }
 :root[data-theme="watch"] .wall > .rays { display: none; }
-:root[data-theme="watch"] .wall > .char { filter: grayscale(.55) contrast(1.12) brightness(.78); }
+/* 히든 테마에서는 신부가 사라지고 빈 식장만 남는다 */
+.wall > .char { transition: opacity 1.4s ease; }
+:root[data-theme="watch"] .wall > .char { opacity: 0; }
 :root[data-theme="watch"] .wall::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .24) 0 1px, transparent 1px 3px); }
 @media (prefers-reduced-motion: reduce) { .wall > .rays { animation: none; } }
