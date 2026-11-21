@@ -259,7 +259,7 @@ export const webtoon = {
   lead: '자기 눈으로 보는, 어느 하굣길.',
   leadWatch: '여름 눈으로 보는, 계획대로인 하굣길.',
   cuts: [
-    { src: 'assets/webtoon/hall.webp', memo: '수업이 끝난 강의실 문, 오후의 복도', lines: [['n', '수업이 끝났다.']], watch: [['n', '종료 3분 전. 문 앞 도착.']] },
+    { src: 'assets/webtoon/hall-day.webp', memo: '수업이 끝난 강의실 문, 오후의 복도', lines: [['n', '수업이 끝났다.']], watch: [['n', '종료 3분 전. 문 앞 도착.']] },
     { src: 'assets/webtoon/wave.webp', memo: '복도 벽에 기대 있다가 환하게 손을 흔드는 여름. 어깨에 운동 가방, 손에 음료', lines: [['y', '어, 자기야 나왔다!'], ['n', '다른 학과 선배가 왜 여기 있는지는 아무도 모른다.']], watch: [['n', '47분 기다렸다. 하나도 안 길었다.'], ['y', '어, 자기야 나왔다!']] },
     { src: 'assets/webtoon/shine.webp', memo: '햇빛에 반짝이는 은빛 머리, 키 큰 여름의 전신', lines: [['n', '지나가던 학생들이 한 번씩 돌아본다.'], ['n', '여름의 눈에는 나뿐이다.']], watch: [['n', '다들 본다. 상관없다.'], ['n', '자기만 보면 되니까.']] },
     { src: 'assets/webtoon/drone.webp', memo: '창밖 하늘에 떠 있는 정체 모를 드론', lines: [['n', '창밖에는 드론.']], watch: [['n', '3호기. 오늘도 맑음.']] },
