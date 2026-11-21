@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>한여름</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/wall.css">
+<link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/wall.css?v=3">
 <script src="js/theme.js"></script>
 </head>
 <body>
@@ -84,7 +84,7 @@
 <script type="module">
 import './js/common.js';
 import { character as c, gallery, invite, hidden, wall } from './js/config.js';
-import { mountScene } from './js/wallpaper.js';
+import { mountScene } from './js/wallpaper.js?v=3';
 import { onTheme, trigger, isWatch } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
