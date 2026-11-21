@@ -16,8 +16,8 @@
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css?v=89a5d5b0">
-<script src="js/theme.js?v=89a5d5b0"></script>
+<link rel="stylesheet" href="css/style.css?v=c83e6e22">
+<script src="js/theme.js?v=c83e6e22"></script>
 </head>
 <body>
 <div class="sheet">
@@ -35,13 +35,13 @@
 </main>
 </div>
 <script type="module">
-import { setAvatar } from './js/common.js?v=89a5d5b0';
-import { character as c, chat, hidden, faceWatch } from './js/config.js?v=89a5d5b0';
-import { mark, onTheme, isWatch } from './js/hidden.js?v=89a5d5b0';
+import { setAvatar } from './js/common.js?v=c83e6e22';
+import { character as c, chat, hidden, faceWatch, fmt, t } from './js/config.js?v=c83e6e22';
+import { mark, onTheme, isWatch } from './js/hidden.js?v=c83e6e22';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 setAvatar($('ava'));
-$('who').textContent = '신부 ' + c.name;
+$('who').textContent = t('신부') + ' ' + c.name;
 const log = $('log'), choicesEl = $('choices');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let token = 0, lastFrom = '';
@@ -58,13 +58,13 @@ async function play(id) {
   const mine = ++token;
   const node = chat.nodes[id];
   choicesEl.replaceChildren();
-  if (!log.children.length) log.appendChild(mk('p', 'empty', '아직 대화가 없어요. 아래에서 먼저 말을 걸어보세요.'));
+  if (!log.children.length) log.appendChild(mk('p', 'empty', t('아직 대화가 없어요. 아래에서 먼저 말을 걸어보세요.')));
   let n = 0;
   for (const line of node.say) {
-    const t = mk('div', 'typing', '입력 중…');
-    log.appendChild(t); scroll();
-    await sleep(500 + line.length * 28);
-    t.remove();
+    const dots = mk('div', 'typing', t('입력 중…'));
+    log.appendChild(dots); scroll();
+    await sleep(500 + line.length * fmt.typing);
+    dots.remove();
     if (mine !== token) return;
     say(line, line.startsWith('*') ? '' : node.faces?.[n++]);
   }
@@ -76,9 +76,9 @@ const lead = document.querySelector('.lead');
 const stamp = (text) => {
   const d = new Date(), h = d.getHours();
   return text
-    .replace('{time}', `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}시 ${d.getMinutes()}분`)
-    .replace('{date}', `${d.getMonth() + 1}월 ${d.getDate()}일`)
-    .replace('{day}', '일월화수목금토'[d.getDay()]);
+    .replace('{time}', fmt.time(h, d.getMinutes()))
+    .replace('{date}', fmt.date(d.getMonth() + 1, d.getDate()))
+    .replace('{day}', fmt.day(d.getDay()));
 };
 async function flood() {
   const mine = ++token;

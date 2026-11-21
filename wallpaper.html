@@ -15,8 +15,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/wall.css?v=89a5d5b0">
-<script src="js/theme.js?v=89a5d5b0"></script>
+<link rel="stylesheet" href="css/wall.css?v=c83e6e22">
+<script src="js/theme.js?v=c83e6e22"></script>
 <style>
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; overflow: hidden; background: #0d0f0c; }
@@ -33,11 +33,14 @@
 <body>
 <div class="fill"></div>
 <div class="stage wall" id="stage"></div>
-<a class="back" href="index.html">← 청첩장</a>
+<a class="back" id="back" href="index.html">← 청첩장</a>
 <script type="module">
-import { wall } from './js/config.js?v=89a5d5b0';
-import { mountScene } from './js/wallpaper.js?v=89a5d5b0';
+import { wall, site, t } from './js/config.js?v=c83e6e22';
+import { mountScene } from './js/wallpaper.js?v=c83e6e22';
 mountScene(document.getElementById('stage'), wall);
+document.title = `${t('신부')} | ${site.title}`;
+document.getElementById('back').textContent = '← ' + t('청첩장');
+delete document.documentElement.dataset.i18n;
 </script>
 </body>
 </html>

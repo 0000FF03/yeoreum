@@ -288,3 +288,17 @@ footer p + p { margin-top: 4px; }
 .cut p.n { align-self: center; max-width: 86%; border: 0; padding: 2px 0; text-align: center; font-family: var(--serif); color: var(--mute); }
 .wt-end .lead { margin-bottom: 0; }
 :root[data-theme="watch"] .cut img { filter: grayscale(.7) contrast(1.1) brightness(.7); }
+
+/* 언어 고르기 (헤더 왼쪽 위) */
+header.top .in { position: relative; }
+.langs { position: absolute; left: 10px; top: 7px; display: flex; gap: 2px; font-family: var(--body); font-size: 11px; line-height: 1.6; }
+.langs a { padding: 1px 5px; color: var(--mute); border: 1px solid transparent; }
+.langs a:hover { color: var(--ink); }
+.langs a.on { color: var(--ink); border-color: var(--line); }
+/* 번역이 끝날 때까지 본문을 가림 (theme.js가 붙였다가 common.js가 뗌) */
+:root[data-i18n="wait"] .sheet { visibility: hidden; }
+/* 일본어: 글꼴과 줄바꿈 */
+:root:lang(ja) { --serif: 'Shippori Mincho', 'Nanum Myeongjo', serif; --body: 'Shippori Mincho', 'Gowun Batang', serif; }
+:root:lang(ja) body { word-break: normal; line-break: strict; }
+@supports (word-break: auto-phrase) { :root:lang(ja) body { word-break: auto-phrase; } }
+:root:lang(en) .sec h2 { letter-spacing: .06em; }

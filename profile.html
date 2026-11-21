@@ -16,8 +16,8 @@
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css?v=89a5d5b0">
-<script src="js/theme.js?v=89a5d5b0"></script>
+<link rel="stylesheet" href="css/style.css?v=c83e6e22">
+<script src="js/theme.js?v=c83e6e22"></script>
 </head>
 <body>
 <div class="sheet">
@@ -72,8 +72,8 @@
 </main>
 </div>
 <script type="module">
-import { setAvatar } from './js/common.js?v=89a5d5b0';
-import { character as c, world, faces } from './js/config.js?v=89a5d5b0';
+import { setAvatar } from './js/common.js?v=c83e6e22';
+import { character as c, world, faces } from './js/config.js?v=c83e6e22';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 $('pic').src = c.image;
@@ -83,7 +83,7 @@ c.tags.forEach((t) => $('tags').appendChild(mk('span', '', '#' + t)));
 c.facts.forEach(([k, v]) => { const d = mk('div'); d.append(mk('dt', '', k), mk('dd', '', v)); $('facts').appendChild(d); });
 c.traits.forEach(([t, d]) => { const k = mk('div'); k.append(mk('b', '', t), mk('p', '', d)); $('traits').appendChild(k); });
 Object.values(faces).forEach((f) => {
-  const d = mk('figure'); const i = mk('img'); i.loading = 'lazy'; i.src = f.src; i.alt = f.label + ' 표정의 한여름';
+  const d = mk('figure'); const i = mk('img'); i.loading = 'lazy'; i.src = f.src; i.alt = `${c.name} · ${f.label}`;
   i.style.objectPosition = `${f.at[0] * 100}% 0%`; i.style.transformOrigin = `${f.at[0] * 100}% ${f.at[1] * 100}%`; // 얼굴 쪽으로 당겨서 보여줌
   const cap = mk('figcaption'); cap.append(mk('b', '', f.label), mk('span', '', f.line));
   const pic = mk('div', 'pic'); pic.appendChild(i); d.append(pic, cap); $('faces').appendChild(d);

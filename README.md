@@ -4,6 +4,7 @@
 
 - `index.html` 청첩장 · `profile.html` 신부 소개 · `room.html` 3D 신혼집 · `collection.html` 수집품 전시실 · `chat.html` 연락하기 · `gallery.html` 갤러리 · `webtoon.html` 웹툰
 - 캐릭터·대사·청첩장 내용은 `js/config.js` 한 파일에서 수정합니다.
+- 한국어·일본어·영어를 지원합니다. 일본어는 `js/ja.js`, 영어는 `js/en.js`에 같은 모양으로 글자만 적습니다. 화면 왼쪽 위에서 고르거나 주소 뒤에 `?lang=ja`, `?lang=en`, `?lang=ko`를 붙입니다 (처음에는 브라우저 언어를 따릅니다).
 - 3D 소품은 `js/config.js`의 `room` 항목에 `glb` 경로를 넣으면 직접 만든 모델로 교체됩니다.
 - 수집품 모델(`assets/collection/*.glb`)은 Blender로 만들었고, `js/config.js`의 `collection` 항목으로 추가·수정합니다.
 

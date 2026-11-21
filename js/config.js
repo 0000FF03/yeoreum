@@ -1,10 +1,28 @@
-// ★ 이 파일만 고치면 사이트 전체가 바뀝니다.
-export const site = {
+// ★ 이 파일만 고치면 사이트 전체가 바뀝니다. (한국어 원본. 일본어는 ja.js, 영어는 en.js에 같은 모양으로 글자만 적습니다.)
+import ja from './ja.js?v=c83e6e22';
+import en from './en.js?v=c83e6e22';
+
+// 지금 언어 (theme.js가 <html lang>에 적어 둠). T는 그 언어의 문구 묶음, 한국어면 비어 있음.
+const T = { ja, en }[document.documentElement.lang] || null;
+export const lang = T ? document.documentElement.lang : 'ko';
+const plain = (v) => v && typeof v === 'object' && !Array.isArray(v);
+// 번역을 원본 위에 겹침: 묶음은 항목별로, 묶음이 든 목록은 순서대로 하나씩, 그 밖의 값은 통째로 바꿈
+function merge(a, b) {
+  if (b === undefined) return a;
+  if (Array.isArray(a) && Array.isArray(b) && a.length && a.every(plain)) return a.map((v, i) => merge(v, b[i]));
+  if (plain(a) && plain(b)) { const o = { ...a }; Object.keys(b).forEach((k) => { o[k] = merge(a[k], b[k]); }); return o; }
+  return b;
+}
+const L = (key, base) => (T ? merge(base, T[key]) : base);
+// 페이지에 직접 적힌 한국어 문구를 지금 언어로 바꿈 (없으면 그대로)
+export const t = (s) => (T && T.words && T.words[s]) || s;
+
+export const site = L('site', {
   title: '한여름',
   disclaimer: '코미디와 얀데레가 섞인 가상의 이야기입니다. 등장인물과 상황은 모두 허구입니다.',
-};
+});
 
-export const character = {
+export const character = L('character', {
   name: '한여름',
   en: 'YEOREUM',
   image: 'assets/profile.jpg',
@@ -29,11 +47,11 @@ export const character = {
     ['질투', '웃는 얼굴 그대로 사이에 끼어들고, 목소리는 더 다정하고 낮아져요.'],
     ['걱정돼서', '위치 확인도, 드론도, 전부 “걱정돼서요!”로 끝나요.'],
   ],
-};
+});
 
 // 상황예시 8장면 → 선택지 채팅. 앞의 줄이 * 로 시작하면 행동 묘사로 표시됩니다.
 // 맨 뒤 배열은 대사(행동 묘사 제외)마다 순서대로 쓸 표정 이름(아래 faces 참고).
-const scenes = [
+const scenesKo = [
   ['놔요, 저 혼자 갈 수 있어요.', ['*허리를 숙여 눈높이를 맞추고, 손목을 잡은 채 환하게 웃으며*', '에이, 자기는 힘 빼고 가만히 있어요. 걱정 마요, 살살 잡았어요. 진짜예요! 이게 제일 살살이에요. 헤헤.'], ['laugh']],
   ['진짜 미쳤어요? 제발 꺼져요.', ['*눈이 반짝이며*', '우와, 자기가 저한테 그런 말까지 해주다니! 저 오늘 진짜 행복해요. 마음을 연 거네요!', '아, 꺼지라고 해도 괜찮아요. 안 꺼질 거니까. 헤헤.'], ['laugh', 'tease']],
   ['(다른 사람과 웃으며 이야기한다)', ['*어느새 옆에 와서 그림자가 드리울 만큼 허리를 숙여 어깨에 팔을 두르며*', '어머, 이분은 누구세요? 자기 친구예요? ...자기야, 이름 좀 알려줘. 선배가 인사하고 싶어서.', '*웃는 얼굴인데 목소리가 낮다*  헤헤.'], ['blank']],
@@ -43,10 +61,11 @@ const scenes = [
   ['이거 뭐예요? 내 가방에 이상한 게 달려 있는데.', ['*눈을 깜빡이다가 해맑게*', '아, 그거요? 위치 태그예요! 자기 잃어버릴까 봐 달아놨어요. 아니, 물건이 잃어버릴까 봐요. 그게 그거지만! 헤헤.', '떼면 서운해요. 아니, 안 서운해요. 다시 달면 되니까.'], ['laugh', 'pout']],
   ['(옆자리 동기와 과제 이야기를 한다)', ['*어느새 반대편 자리에 앉아 턱을 괴고 웃으며*', '두 분 사이좋네요. 근데 자기야, 그 사람 번호 저장해놨어요? ...아, 아니에요. 그냥 궁금해서.', '*손에 들린 펜이 조용히 휘어진다*  헤헤.'], ['yandere']],
 ];
+const scenes = T ? scenesKo.map((s, i) => [T.scenes[i][0], T.scenes[i][1], s[2]]) : scenesKo;
 const menu = (except) => [...scenes.map((s, i) => ({ t: s[0], next: 's' + i, i })).filter((c) => c.i !== except).map(({ t, next }) => ({ t, next }))];
 
 // 청첩장 정보 (여름이 혼자 정한 결혼식)
-export const invite = {
+export const invite = L('invite', {
   date: [2027, 7, 18, 12, 0], // 년, 월, 일, 시, 분
   dateText: '2027년 7월 18일 일요일 낮 12시',
   place: '신혼집 정원 (위치는 비밀이에요)',
@@ -86,11 +105,12 @@ export const invite = {
     ['신랑 측', '자기', '마음만 주세요'],
   ],
   giftReply: '이미 받았어요. 처음 만난 날에요 ♡',
-};
+  sign: ['신부', ' 올림'], // 모시는 글 아래 서명: [이름 앞, 이름 뒤]
+});
 
 // 표정 일러스트. at은 그림에서 얼굴 중심의 위치(가로, 세로 0~1) — 채팅 아바타가 이 부분을 동그랗게 잘라 씁니다.
 // 채팅에서는 대사마다 표정이 바뀌고, 신부 소개의 '신부의 표정'에 label과 line이 함께 나옵니다.
-export const faces = {
+export const faces = L('faces', {
   smile: { src: 'assets/face/smile.webp', at: [0.46, 0.28], label: '기본', line: '자기 보면 저절로 이렇게 돼요.' },
   laugh: { src: 'assets/face/laugh.webp', at: [0.49, 0.25], label: '행복', line: '방금 저한테 말 걸었죠? 오늘 일기에 쓸게요!' },
   shy: { src: 'assets/face/shy.webp', at: [0.41, 0.27], label: '수줍음', line: '그, 그렇게 보면… 더 봐도 돼요.' },
@@ -100,7 +120,7 @@ export const faces = {
   cry: { src: 'assets/face/cry.webp', at: [0.49, 0.27], label: '울먹', line: '슬픈 게 아니라 감동이라서요. 진짜예요.' },
   yandere: { src: 'assets/face/yandere.webp', at: [0.5, 0.31], label: '질투', line: '그 사람 이름, 뭐라고 했죠? 헤헤.' },
   blank: { src: 'assets/face/blank.webp', at: [0.49, 0.26], label: '정색', line: '…웃고 있어요. 지금도요.' },
-};
+});
 // 채팅 기본 표정, 히든 테마에서 쓰는 표정
 export const faceDefault = 'smile';
 export const faceWatch = ['yandere', 'blank'];
@@ -115,7 +135,7 @@ export const chat = {
   ),
 };
 
-export const world = {
+export const world = L('world', {
   lead: '현대 한국의 한 대학교. 당신은 20~21세 재학생이고, 어느 날부터 주변에 한여름이 나타나기 시작했어요.',
   translator: [
     ['욕설', '애교'],
@@ -132,10 +152,10 @@ export const world = {
     ['기억하는 사람', '당신이 한 말은 전부 기억하고, 며칠 뒤 선물로 돌려줘요.'],
     ['지금', '손목에는 당신 이니셜 팔찌. 오늘도 좋아하는 음료를 들고 기다리고 있어요.'],
   ],
-};
+});
 
 // 신혼집 소품. glb에 파일 경로를 넣으면 그 소품만 직접 만든 3D 모델로 교체됩니다. (예: 'assets/bear.glb')
-export const room = [
+export const room = L('room', [
   { id: 'bed', name: '침대', line: '자기 자리는 왼쪽이에요. 저는 오른쪽! 이미 정해놨어요. 헤헤.', glb: '' },
   { id: 'wall', name: '사진 벽', line: '전부 자기예요. 우연히 찍힌 거예요, 우연히. 거의 다 우연이에요.', glb: '' },
   { id: 'monitor', name: '모니터', line: '이거요? 학교 보안이 걱정돼서 잠깐 본 거예요. 자기 나오는 칸만요!', glb: '' },
@@ -145,11 +165,11 @@ export const room = [
   { id: 'bear', name: '곰인형', line: '자기 닮았죠? 이름도 ‘자기’예요. 오른쪽 눈에는 초소형 카메라가 들어 있어요. 곧 자기 방에 선물로 보낼 거라서요. 헤헤.', glb: '' },
   { id: 'fridge', name: '냉장고', line: '자기가 좋아하는 음료가 항상 가득이에요. 유통기한도 제가 관리해요!', glb: '' },
   { id: 'tagbox', name: '위치 태그 상자', line: '여분이에요. 떼면 서운한데, 아니 안 서운해요. 다시 달면 되니까요.', glb: '' },
-];
+]);
 
 // 수집품 전시실. glb는 Blender로 만든 모델 경로, 비우면 빈 진열장으로 표시됩니다.
 // print는 영수증 겉면에 찍히는 글자: 문자열은 가운데 줄, [왼쪽, 오른쪽]은 품목 줄, '-'는 점선. note는 여름의 손글씨.
-export const collection = [
+export const collection = L('collection', [
   {
     id: 'straw', no: '001', name: '자기가 쓴 빨대', glb: 'assets/collection/straw.glb',
     info: [['수집일', '만난 지 3일째'], ['수집 장소', '학생회관 카페 반납대'], ['상태', '끝에 살짝 깨문 자국 (귀여움)']],
@@ -172,11 +192,11 @@ export const collection = [
     info: [['수집일', '곧'], ['수집 장소', '자기 근처 어딘가'], ['상태', '자리만 비워둠']],
     line: '다음 자리는 비워뒀어요. 자기가 오늘은 뭘 두고 갈지 기대돼요. 헤헤.',
   },
-];
+]);
 
 // 히든 테마(감시 모드). 아래 조건 중 하나를 채우면 켜지고, 맨 아래 '선물 주기'를 누르면 원래대로 돌아옵니다.
 // 조건: 못 가요 6번 / 새벽 0~4시 접속 / 5번째 방문마다 / 탭을 떠났다 돌아오기 / 드론 5번 누르기 / 채팅 8장면 전부 보기
-export const hidden = {
+export const hidden = L('hidden', {
   awayTitle: '어디 가요, 자기야?',
   enter: {
     rsvp: ['여섯 번이나 눌렀네.', '…괜찮아요. 이제 버튼은 제가 누를게요.'],
@@ -222,20 +242,20 @@ export const hidden = {
     button: '여름에게 선물 주기',
     reply: '어…? 선물? 저 주는 거예요? …헤헤. 헤헤헤. 기분 다 풀렸어요!',
   },
-};
+});
 
 // 움직이는 일러스트(청첩장 표지, 전체 화면 페이지). src는 배경을 지운 그림(WebP), aspect는 그림의 가로÷세로.
 // closedSrc에 같은 크기·같은 위치의 '눈 감은 그림'을 넣으면 눈 깜빡임이 켜집니다.
-export const wall = {
+export const wall = L('wall', {
   src: 'assets/wall/bride.webp',
   closedSrc: '',
   aspect: 832 / 1216,
   label: '웨딩드레스를 입고 부케를 든 한여름',
-};
+});
 
 // 갤러리. wide는 한 줄을 다 쓰는 큰 칸, pos는 작게 잘릴 때 보여줄 부분(가로% 세로%).
 // watch: true인 그림은 히든 테마에서만 보이고, 평소에는 잠긴 칸으로 나옵니다.
-export const gallery = [
+export const gallery = L('gallery', [
   { title: '프러포즈 연습, 열일곱 번째', src: 'assets/gallery/ring.webp', wide: true, pos: '8% 50%' },
   { title: '자기 입맛은 다 외웠어요', src: 'assets/gallery/kitchen.webp', pos: '0% 50%' },
   { title: '드레스 고르는 중! 보면 안 돼요', src: 'assets/gallery/fitting.webp', pos: '12% 50%' },
@@ -246,13 +266,13 @@ export const gallery = [
   { title: '찾았다', src: 'assets/gallery/found.webp', pos: '15% 50%' },
   { title: '자기 자리는 왼쪽이에요', src: 'assets/gallery/bed.webp', pos: '15% 50%' },
   { title: '…어디 가요, 자기야?', src: 'assets/gallery/dusk.webp', wide: true, pos: '50% 50%', watch: true },
-];
+]);
 // 잠긴 칸에 나오는 말
-export const galleryLocked = '아직은 안 보여줄래요';
+export const galleryLocked = L('galleryLocked', '아직은 안 보여줄래요');
 
 // 웹툰(세로 스크롤). 평소에는 '자기' 시점(lines), 히든 테마에서는 같은 그림을 여름 시점(watch)으로 읽습니다.
 // src가 비어 있으면 memo가 적힌 콘티 칸으로 표시됩니다. 앞 글자: n 해설(속마음), y 여름, u 자기.
-export const webtoon = {
+export const webtoon = L('webtoon', {
   ep: '1화',
   title: '어, 자기야 나왔다!',
   titleWatch: '나올 줄 알았어요',
@@ -271,4 +291,15 @@ export const webtoon = {
   ],
   end: '다음 화 · 밥 (메뉴는 이미 정해져 있어요)',
   endWatch: '다음 화는 없어요. 자기가 여기 계속 있을 거니까.',
-};
+});
+
+// 날짜·시간 형식과 요일 이름. typing은 채팅에서 글자 하나를 치는 데 걸리는 시간(1/1000초).
+export const fmt = L('fmt', {
+  dow: ['일', '월', '화', '수', '목', '금', '토'],
+  day: (i) => '일월화수목금토'[i],
+  time: (h, m) => `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}시 ${m}분`,
+  date: (mo, d) => `${mo}월 ${d}일`,
+  calDay: (d) => `${d}일 결혼식`,
+  dday: (a, b, left) => (left > 0 ? [`${a} ♥ ${b}의 결혼식이 `, `${left}일`, ' 남았습니다. (사귄 지는 0일)'] : [`${a} ♥ ${b}의 결혼식이 `, '오늘', '이에요!']),
+  typing: 28,
+});

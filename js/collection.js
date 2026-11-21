@@ -1,10 +1,11 @@
 // 수집품 전시실: 진열장 하나에 고른 수집품을 올려 보여줍니다. 모델은 Blender로 만든 .glb.
 import * as THREE from '../vendor/three.module.js';
 import { GLTFLoader } from '../vendor/loaders/GLTFLoader.js';
+import { t } from './config.js?v=c83e6e22';
 
 const std = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, metalness: 0, ...o });
 const BASE_Y = 1.88; // 수집품이 떠 있는 높이
-const FONT = "'Gowun Batang', 'Nanum Myeongjo', serif";
+const FONT = "'Gowun Batang', 'Nanum Myeongjo', 'Shippori Mincho', serif";
 
 // 영수증 겉면 글자를 그린 텍스처 (glTF UV에 맞춰 flipY를 끔)
 function printTexture(lines, note) {
@@ -18,11 +19,12 @@ function printTexture(lines, note) {
     const x = c.getContext('2d'), w = c.width;
     x.fillStyle = '#fffdf6'; x.fillRect(0, 0, w, c.height);
     x.fillStyle = '#3b3128'; x.strokeStyle = '#3b3128'; x.textBaseline = 'middle';
+    const total = lines.filter(Array.isArray).pop(); // 마지막 품목 줄(합계)은 굵게
     let y = 190;
     lines.forEach((l, i) => {
       if (l === '-') { x.setLineDash([10, 8]); x.lineWidth = 3; x.beginPath(); x.moveTo(48, y); x.lineTo(w - 48, y); x.stroke(); }
       else if (Array.isArray(l)) {
-        x.font = `${l[0] === '합계' ? '700 ' : ''}38px ${FONT}`;
+        x.font = `${l === total ? '700 ' : ''}38px ${FONT}`;
         x.textAlign = 'left'; x.fillText(l[0], 52, y);
         x.textAlign = 'right'; x.fillText(l[1], w - 52, y);
       } else { x.font = `${i === 0 ? '700 46px' : '34px'} ${FONT}`; x.textAlign = 'center'; x.fillText(l, w / 2, y); }
@@ -50,7 +52,9 @@ function reservedSign() {
     const x = c.getContext('2d');
     x.fillStyle = '#fffdf8'; x.fillRect(0, 0, 256, 160);
     x.strokeStyle = '#a07f3a'; x.lineWidth = 4; x.strokeRect(10, 10, 236, 140);
-    x.fillStyle = '#3b3128'; x.font = `700 56px ${FONT}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('예약', 128, 84);
+    x.fillStyle = '#3b3128'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    let size = 56; do { x.font = `700 ${size}px ${FONT}`; size -= 2; } while (x.measureText(t('예약')).width > 200); // 긴 말은 팻말에 맞게 줄임
+    x.fillText(t('예약'), 128, 84);
     tex.needsUpdate = true;
   };
   draw();

@@ -1,5 +1,6 @@
 import * as THREE from '../vendor/three.module.js';
 import { GLTFLoader } from '../vendor/loaders/GLTFLoader.js';
+import { t } from './config.js?v=c83e6e22';
 
 const std = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.85, metalness: 0, ...o });
 function box(w, h, d, color, x = 0, y = 0, z = 0, o) {
@@ -82,7 +83,7 @@ function makeMonitor() {
       const x = (i % 3) * (w / 3) + 5, y = Math.floor(i / 3) * (h / 3) + 5, cw = w / 3 - 10, ch = h / 3 - 10;
       c.fillStyle = i === 4 ? '#3a1c2e' : '#16302a'; c.fillRect(x, y, cw, ch);
       c.fillStyle = '#7dffb0'; c.font = '14px monospace'; c.fillText('CAM 0' + (i + 1), x + 6, y + 18);
-      if (i === 4) { c.fillStyle = '#ff4f8b'; c.beginPath(); c.arc(x + cw / 2, y + ch / 2 + 4, 14, 0, 6.3); c.fill(); c.fillStyle = '#fff'; c.font = '16px sans-serif'; c.fillText('자기', x + cw / 2 - 16, y + ch - 10); }
+      if (i === 4) { c.fillStyle = '#ff4f8b'; c.beginPath(); c.arc(x + cw / 2, y + ch / 2 + 4, 14, 0, 6.3); c.fill(); c.fillStyle = '#fff'; c.font = '16px sans-serif'; c.textAlign = 'center'; c.fillText(t('자기'), x + cw / 2, y + ch - 10); c.textAlign = 'start'; }
     }
   });
   g.add(box(1.5, 0.95, 0.08, '#2a1630', 0, 0, 0));

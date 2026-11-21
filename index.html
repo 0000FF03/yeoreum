@@ -16,9 +16,9 @@
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css?v=89a5d5b0">
-<link rel="stylesheet" href="css/wall.css?v=89a5d5b0">
-<script src="js/theme.js?v=89a5d5b0"></script>
+<link rel="stylesheet" href="css/style.css?v=c83e6e22">
+<link rel="stylesheet" href="css/wall.css?v=c83e6e22">
+<script src="js/theme.js?v=c83e6e22"></script>
 </head>
 <body>
 <div class="sheet">
@@ -36,7 +36,7 @@
   <p class="eyebrow">Invitation</p>
   <h2>모시는 글</h2>
   <p class="poem" id="poem"></p>
-  <p class="sign">신부<b id="sign"></b> 올림</p>
+  <p class="sign" id="sign"></p>
 </section>
 
 <section class="sec pad tint">
@@ -93,10 +93,10 @@
 </main>
 </div>
 <script type="module">
-import './js/common.js?v=89a5d5b0';
-import { character as c, gallery, invite, hidden, wall } from './js/config.js?v=89a5d5b0';
-import { mountScene } from './js/wallpaper.js?v=89a5d5b0';
-import { onTheme, trigger, isWatch } from './js/hidden.js?v=89a5d5b0';
+import './js/common.js?v=c83e6e22';
+import { character as c, gallery, invite, hidden, wall, fmt } from './js/config.js?v=c83e6e22';
+import { mountScene } from './js/wallpaper.js?v=c83e6e22';
+import { onTheme, trigger, isWatch } from './js/hidden.js?v=c83e6e22';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 mountScene($('wall'), wall);          // 표지: 움직이는 신부 일러스트 (누르면 전체 화면)
@@ -109,19 +109,19 @@ onTheme((watch) => {
   $('h1').replaceChildren(hero[0], document.createElement('br'), mk('em', '', hero[1]));
   $('poem').replaceChildren(...(watch ? hidden.greeting : invite.greeting).map((l) => mk('span', '', l)));
 });
-$('sign').textContent = invite.bride.name;
+$('sign').replaceChildren(invite.sign[0], mk('b', '', invite.bride.name), invite.sign[1]);
 [['1', invite.bride], ['2', invite.groom]].forEach(([n, p]) => { $('r' + n).textContent = p.role; $('n' + n).textContent = p.name; $('d' + n).textContent = p.desc; });
 
 // 달력 + 카운트다운
 const [Y, M, D, hh, mm] = invite.date;
 $('calhead').textContent = `${Y}. ${String(M).padStart(2, '0')}`;
 const cal = $('cal');
-['일', '월', '화', '수', '목', '금', '토'].forEach((d, i) => cal.appendChild(mk('span', 'dow' + (i === 0 ? ' sun' : ''), d)));
+fmt.dow.forEach((d, i) => cal.appendChild(mk('span', 'dow' + (i === 0 ? ' sun' : ''), d)));
 const first = new Date(Y, M - 1, 1).getDay(), days = new Date(Y, M, 0).getDate();
 for (let i = 0; i < first; i++) cal.appendChild(mk('span'));
 for (let d = 1; d <= days; d++) {
   const s = mk('span', (new Date(Y, M - 1, d).getDay() === 0 ? 'sun' : ''));
-  if (d === D) { s.classList.add('day'); s.appendChild(mk('b', '', d)); s.setAttribute('aria-label', `${d}일 결혼식`); } else s.textContent = d;
+  if (d === D) { s.classList.add('day'); s.appendChild(mk('b', '', d)); s.setAttribute('aria-label', fmt.calDay(d)); } else s.textContent = d;
   cal.appendChild(s);
 }
 const target = new Date(Y, M - 1, D, hh, mm);
@@ -131,7 +131,8 @@ function tick() {
   let ms = Math.max(0, target - Date.now());
   units.forEach(([, size], i) => { const v = Math.floor(ms / size); cells[i].textContent = i ? String(v).padStart(2, '0') : v; ms -= v * size; });
   const left = Math.ceil((target - Date.now()) / 86400000);
-  $('dday').replaceChildren(`${invite.bride.name} ♥ ${invite.groom.name}의 결혼식이 `, mk('b', '', left > 0 ? `${left}일` : '오늘'), left > 0 ? ' 남았습니다. (사귄 지는 0일)' : '이에요!');
+  const [pre, num, post] = fmt.dday(invite.bride.name, invite.groom.name, left);
+  $('dday').replaceChildren(pre, mk('b', '', num), post);
 }
 tick(); setInterval(tick, 1000);
 
