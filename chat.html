@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>연락하기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=4">
 <script src="js/theme.js"></script>
 </head>
 <body>
@@ -25,7 +25,7 @@
 </div>
 <script type="module">
 import { setAvatar } from './js/common.js';
-import { character as c, chat, hidden } from './js/config.js';
+import { character as c, chat, hidden, faceWatch } from './js/config.js';
 import { mark, onTheme, isWatch } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -35,10 +35,10 @@ const log = $('log'), choicesEl = $('choices');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let token = 0, lastFrom = '';
 const scroll = () => { log.scrollTop = log.scrollHeight; };
-function say(text) {
+function say(text, face) {
   if (text.startsWith('*')) { log.appendChild(mk('div', 'act', text.replace(/\*/g, '').trim())); lastFrom = 'act'; scroll(); return; }
   const row = mk('div', 'row c');
-  const a = mk('div', lastFrom === 'c' ? 'ava ghost' : 'ava'); setAvatar(a);
+  const a = mk('div', 'ava'); setAvatar(a, face); setAvatar($('ava'), face); // 대사마다 표정이 바뀜
   row.append(a, mk('div', 'msg', text));
   log.appendChild(row); lastFrom = 'c'; scroll();
 }
@@ -48,13 +48,14 @@ async function play(id) {
   const node = chat.nodes[id];
   choicesEl.replaceChildren();
   if (!log.children.length) log.appendChild(mk('p', 'empty', '아직 대화가 없어요. 아래에서 먼저 말을 걸어보세요.'));
+  let n = 0;
   for (const line of node.say) {
     const t = mk('div', 'typing', '입력 중…');
     log.appendChild(t); scroll();
     await sleep(500 + line.length * 28);
     t.remove();
     if (mine !== token) return;
-    say(line);
+    say(line, line.startsWith('*') ? '' : node.faces?.[n++]);
   }
   if (id !== chat.start) mark('chat', id, Object.keys(chat.nodes).length - 1); // 모든 장면을 보면 히든 테마
   node.choices.forEach((ch) => { const b = mk('button', 'btn', ch.t); b.type = 'button'; b.onclick = () => { me(ch.t); play(ch.next); }; choicesEl.appendChild(b); });
@@ -79,7 +80,7 @@ async function flood() {
     if (mine !== token) return;
     const pool = hidden.flood.filter((l) => l !== prev);
     prev = pool[Math.floor(Math.random() * pool.length)];
-    say(stamp(prev));
+    say(stamp(prev), faceWatch[Math.floor(Math.random() * faceWatch.length)]);
     while (log.children.length > 60) log.firstChild.remove();
   }
 }
@@ -87,7 +88,7 @@ function start() {
   const watch = isWatch();
   lead.hidden = choicesEl.hidden = watch;
   if (watch) { flood(); return; }
-  token++; log.replaceChildren(); lastFrom = ''; play(chat.start);
+  token++; log.replaceChildren(); lastFrom = ''; setAvatar($('ava')); play(chat.start);
 }
 $('reset').onclick = start;
 onTheme(start);

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>갤러리</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=4">
 <script src="js/theme.js"></script>
 </head>
 <body>
@@ -22,17 +22,26 @@
 </div>
 <script type="module">
 import './js/common.js';
-import { gallery } from './js/config.js';
+import { gallery, galleryLocked } from './js/config.js';
+import { onTheme } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 const lb = $('lb'), big = $('big');
-function fill(el, g) {
+function fill(el, g, locked) {
   el.replaceChildren();
-  if (g.src) { const i = mk('img'); i.src = g.src; i.alt = g.title; el.appendChild(i); }
-  else { const t = mk('div', 'tile', g.e); t.style.background = `linear-gradient(150deg, ${g.c[0]}, ${g.c[1]})`; el.appendChild(t); }
-  el.appendChild(mk('span', 'cap', g.title));
+  if (locked) { el.append(mk('div', 'tile lock', '?'), mk('span', 'cap', galleryLocked)); return; }
+  const i = mk('img'); i.src = g.src; i.alt = g.title; if (g.pos) i.style.objectPosition = g.pos;
+  el.append(i, mk('span', 'cap', g.title));
 }
-gallery.forEach((g) => { const b = mk('button'); b.type = 'button'; fill(b, g); b.onclick = () => { fill(big, g); lb.hidden = false; }; $('gal').appendChild(b); });
+// 히든 테마에서만 열리는 그림이 있어서, 테마가 바뀔 때마다 다시 그림
+onTheme((watch) => {
+  $('gal').replaceChildren(...gallery.map((g) => {
+    const locked = g.watch && !watch;
+    const b = mk('button', g.wide ? 'wide' : ''); b.type = 'button'; fill(b, g, locked);
+    if (locked) b.disabled = true; else b.onclick = () => { fill(big, g); lb.hidden = false; };
+    return b;
+  }));
+});
 lb.onclick = () => { lb.hidden = true; };
 addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.hidden = true; });
 </script>

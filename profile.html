@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>신부 소개</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=4">
 <script src="js/theme.js"></script>
 </head>
 <body>
@@ -30,23 +30,29 @@
   <div class="traits" id="traits"></div>
 </section>
 <section class="sec pad">
+  <p class="eyebrow">Faces</p>
+  <h2>신부의 표정</h2>
+  <p class="lead" data-watch="자기 앞에서는 이 중 두 개만 쓸게요.">자기 앞에서만 나오는 얼굴들이에요.</p>
+  <div class="faces" id="faces"></div>
+</section>
+<section class="sec pad tint">
   <p class="eyebrow">Dictionary</p>
   <h2>여름의 번역기</h2>
   <p class="lead" data-watch="자기가 무슨 말을 하든 상관없어요. 어차피 이렇게 들을 거니까.">자기가 무슨 말을 하든, 여름에게는 이렇게 들려요.</p>
   <div class="trans" id="trans"></div>
 </section>
-<section class="sec pad tint">
+<section class="sec pad">
   <p class="eyebrow">Just in case</p>
   <h2>“걱정돼서요!” 체크리스트</h2>
   <ul class="check" id="watch"></ul>
   <p class="note" id="wnote"></p>
 </section>
-<section class="sec pad">
+<section class="sec pad tint">
   <p class="eyebrow">Habits</p>
   <h2>신부의 습관</h2>
   <ul class="habits" id="habits"></ul>
 </section>
-<section class="sec pad tint">
+<section class="sec pad">
   <p class="eyebrow">Our Story</p>
   <h2>우리의 이야기</h2>
   <p class="lead" id="lead"></p>
@@ -56,7 +62,7 @@
 </div>
 <script type="module">
 import { setAvatar } from './js/common.js';
-import { site, character as c, chat, world, room, gallery, invite } from './js/config.js';
+import { character as c, world, faces } from './js/config.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 $('pic').src = c.image;
@@ -65,6 +71,12 @@ $('tagline').textContent = c.tagline;
 c.tags.forEach((t) => $('tags').appendChild(mk('span', '', '#' + t)));
 c.facts.forEach(([k, v]) => { const d = mk('div'); d.append(mk('dt', '', k), mk('dd', '', v)); $('facts').appendChild(d); });
 c.traits.forEach(([t, d]) => { const k = mk('div'); k.append(mk('b', '', t), mk('p', '', d)); $('traits').appendChild(k); });
+Object.values(faces).forEach((f) => {
+  const d = mk('figure'); const i = mk('img'); i.src = f.src; i.alt = f.label + ' 표정의 한여름';
+  i.style.objectPosition = `${f.at[0] * 100}% 0%`; i.style.transformOrigin = `${f.at[0] * 100}% ${f.at[1] * 100}%`; // 얼굴 쪽으로 당겨서 보여줌
+  const cap = mk('figcaption'); cap.append(mk('b', '', f.label), mk('span', '', f.line));
+  const pic = mk('div', 'pic'); pic.appendChild(i); d.append(pic, cap); $('faces').appendChild(d);
+});
 world.translator.forEach(([a, b]) => { const r = mk('div'); r.append(mk('s', '', a), mk('i'), mk('b', '', b)); $('trans').appendChild(r); });
 world.watch.forEach((w) => $('watch').appendChild(mk('li', '', w)));
 $('wnote').textContent = world.watchNote;
