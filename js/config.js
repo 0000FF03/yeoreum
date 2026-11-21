@@ -206,6 +206,15 @@ export const hidden = {
   },
 };
 
+// 움직이는 일러스트(청첩장 표지, 전체 화면 페이지). src는 배경을 지운 PNG, aspect는 그림의 가로÷세로.
+// closedSrc에 같은 크기·같은 위치의 '눈 감은 그림'을 넣으면 눈 깜빡임이 켜집니다.
+export const wall = {
+  src: 'assets/wall/bride.png',
+  closedSrc: '',
+  aspect: 832 / 1216,
+  label: '웨딩드레스를 입고 부케를 든 한여름',
+};
+
 // 갤러리: src에 이미지 경로를 넣으면 이미지로, 비우면 색 타일로 표시됩니다.
 export const gallery = [
   { title: '도서관의 여름 선배', src: 'assets/profile.jpg', c: ['#f6e8e6', '#ecd3d2'], e: '책' },

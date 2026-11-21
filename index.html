@@ -6,6 +6,7 @@
 <title>한여름</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/wall.css">
 <script src="js/theme.js"></script>
 </head>
 <body>
@@ -14,7 +15,7 @@
 <section class="cover pad">
   <p class="std" data-watch="I See You">Save the Date</p>
   <p class="sub" data-watch="LIVE · 24H">WEDDING INVITATION</p>
-  <div class="arch"><img id="pic" alt="한여름 일러스트"></div>
+  <div class="arch"><a class="wall" id="wall" href="wallpaper.html" title="크게 보기"></a></div>
   <p class="names"><span id="bride"></span><i>♥</i><span id="groom"></span></p>
   <p class="date" id="date"></p>
   <h1 id="h1"></h1>
@@ -82,11 +83,12 @@
 </div>
 <script type="module">
 import './js/common.js';
-import { character as c, gallery, invite, hidden } from './js/config.js';
+import { character as c, gallery, invite, hidden, wall } from './js/config.js';
+import { mountScene } from './js/wallpaper.js';
 import { onTheme, trigger, isWatch } from './js/hidden.js';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-$('pic').src = c.image;
+mountScene($('wall'), wall);          // 표지: 움직이는 신부 일러스트 (누르면 전체 화면)
 $('bride').textContent = invite.bride.name;
 $('groom').textContent = invite.groom.name;
 $('date').textContent = invite.dateText;
