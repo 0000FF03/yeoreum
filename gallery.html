@@ -4,9 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>갤러리</title>
+<meta name="description" content="우리의 순간들. 전부 우연히 찍힌 거예요.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="한여름">
+<meta property="og:title" content="갤러리 | 한여름">
+<meta property="og:description" content="우리의 순간들. 전부 우연히 찍힌 거예요.">
+<meta property="og:image" content="https://0000ff03.github.io/yeoreum/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fffdf8">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css?v=10">
-<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/style.css?v=89a5d5b0">
+<script src="js/theme.js?v=89a5d5b0"></script>
 </head>
 <body>
 <div class="sheet">
@@ -21,16 +32,16 @@
 </main>
 </div>
 <script type="module">
-import './js/common.js?v=10';
-import { gallery, galleryLocked } from './js/config.js?v=10';
-import { onTheme } from './js/hidden.js?v=10';
+import './js/common.js?v=89a5d5b0';
+import { gallery, galleryLocked } from './js/config.js?v=89a5d5b0';
+import { onTheme } from './js/hidden.js?v=89a5d5b0';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 const lb = $('lb'), big = $('big');
 function fill(el, g, locked) {
   el.replaceChildren();
   if (locked) { el.append(mk('div', 'tile lock', '?'), mk('span', 'cap', galleryLocked)); return; }
-  const i = mk('img'); i.src = g.src; i.alt = g.title; if (g.pos) i.style.objectPosition = g.pos;
+  const i = mk('img'); if (el !== big) i.loading = 'lazy'; i.src = g.src; i.alt = g.title; if (g.pos) i.style.objectPosition = g.pos;
   el.append(i, mk('span', 'cap', g.title));
 }
 // 히든 테마에서만 열리는 그림이 있어서, 테마가 바뀔 때마다 다시 그림

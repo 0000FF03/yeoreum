@@ -7,6 +7,8 @@
 - 3D 소품은 `js/config.js`의 `room` 항목에 `glb` 경로를 넣으면 직접 만든 모델로 교체됩니다.
 - 수집품 모델(`assets/collection/*.glb`)은 Blender로 만들었고, `js/config.js`의 `collection` 항목으로 추가·수정합니다.
 
+스크립트나 스타일을 고친 뒤에는 `python tools/stamp.py`를 한 번 실행해 주소의 버전을 갱신합니다 (브라우저가 옛 파일을 쓰지 않게).
+
 빌드 과정 없이 정적 호스팅(GitHub Pages 등)에 그대로 올리면 동작합니다.
 로컬에서 볼 때는 `python3 -m http.server`로 열어주세요 (파일을 더블클릭하면 모듈 스크립트가 동작하지 않습니다).
 

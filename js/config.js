@@ -224,10 +224,10 @@ export const hidden = {
   },
 };
 
-// 움직이는 일러스트(청첩장 표지, 전체 화면 페이지). src는 배경을 지운 PNG, aspect는 그림의 가로÷세로.
+// 움직이는 일러스트(청첩장 표지, 전체 화면 페이지). src는 배경을 지운 그림(WebP), aspect는 그림의 가로÷세로.
 // closedSrc에 같은 크기·같은 위치의 '눈 감은 그림'을 넣으면 눈 깜빡임이 켜집니다.
 export const wall = {
-  src: 'assets/wall/bride.png',
+  src: 'assets/wall/bride.webp',
   closedSrc: '',
   aspect: 832 / 1216,
   label: '웨딩드레스를 입고 부케를 든 한여름',

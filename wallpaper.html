@@ -4,13 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>신부 | 한여름</title>
-<link rel="stylesheet" href="css/wall.css?v=3">
-<script src="js/theme.js"></script>
+<meta name="description" content="웨딩드레스를 입은 한여름.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="한여름">
+<meta property="og:title" content="신부 | 한여름">
+<meta property="og:description" content="웨딩드레스를 입은 한여름.">
+<meta property="og:image" content="https://0000ff03.github.io/yeoreum/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fffdf8">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/wall.css?v=89a5d5b0">
+<script src="js/theme.js?v=89a5d5b0"></script>
 <style>
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; overflow: hidden; background: #0d0f0c; }
   /* 가운데 세로 무대(2:3). 넓은 화면에서는 같은 배경을 흐리게 깔아 양옆을 채움 */
-  .fill { position: fixed; inset: -6%; background: url(assets/wall/bg.jpg) center / cover; filter: blur(34px) brightness(.55) saturate(1.1); }
+  .fill { position: fixed; inset: -6%; background: url(assets/wall/bg.webp) center / cover; filter: blur(34px) brightness(.55) saturate(1.1); }
   .stage { position: fixed; left: 50%; top: 50%; height: 100dvh; aspect-ratio: 2 / 3; max-width: 100vw; transform: translate(-50%, -50%); }
   @media (max-aspect-ratio: 2 / 3) { .stage { height: auto; width: 100vw; aspect-ratio: auto; top: 0; bottom: 0; transform: translateX(-50%); } }
   .back { position: fixed; z-index: 5; left: max(12px, env(safe-area-inset-left)); top: max(12px, env(safe-area-inset-top)); padding: 6px 14px; border: 1px solid rgba(255, 255, 255, .55); color: #fff;
@@ -24,8 +35,8 @@
 <div class="stage wall" id="stage"></div>
 <a class="back" href="index.html">← 청첩장</a>
 <script type="module">
-import { wall } from './js/config.js?v=10';
-import { mountScene } from './js/wallpaper.js?v=3';
+import { wall } from './js/config.js?v=89a5d5b0';
+import { mountScene } from './js/wallpaper.js?v=89a5d5b0';
 mountScene(document.getElementById('stage'), wall);
 </script>
 </body>

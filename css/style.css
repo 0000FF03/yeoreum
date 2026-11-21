@@ -277,7 +277,7 @@ footer p + p { margin-top: 4px; }
 .wt-head .lead { margin-bottom: 0; }
 .wt { display: flex; flex-direction: column; gap: 56px; padding: 8px 0 72px; }
 .cut { display: flex; flex-direction: column; gap: 10px; }
-.cut img { width: 100%; display: block; border-block: 1px solid var(--line); margin-bottom: 8px; }
+.cut img { width: 100%; height: auto; aspect-ratio: auto 1216 / 832; display: block; border-block: 1px solid var(--line); margin-bottom: 8px; }
 .cut .ph { aspect-ratio: 3 / 2; margin: 0 20px 8px; display: grid; place-content: center; gap: 6px; text-align: center; border: 1px dashed var(--gold); background: repeating-linear-gradient(135deg, var(--paper2) 0 10px, var(--paper) 10px 20px); }
 .cut .ph b { font-family: var(--serif); letter-spacing: .2em; color: var(--gold); }
 .cut .ph span { padding: 0 20px; font-size: 15px; }
