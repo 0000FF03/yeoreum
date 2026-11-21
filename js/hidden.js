@@ -1,5 +1,5 @@
 // 히든 테마(감시 모드): 조건 감지, 테마 전환, 선물로 복귀. 문구는 config.js의 hidden.
-import { hidden } from './config.js';
+import { hidden } from './config.js?v=5';
 
 const root = document.documentElement;
 const store = {

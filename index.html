@@ -82,10 +82,10 @@
 </main>
 </div>
 <script type="module">
-import './js/common.js';
-import { character as c, gallery, invite, hidden, wall } from './js/config.js';
+import './js/common.js?v=5';
+import { character as c, gallery, invite, hidden, wall } from './js/config.js?v=5';
 import { mountScene } from './js/wallpaper.js?v=3';
-import { onTheme, trigger, isWatch } from './js/hidden.js';
+import { onTheme, trigger, isWatch } from './js/hidden.js?v=5';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 mountScene($('wall'), wall);          // 표지: 움직이는 신부 일러스트 (누르면 전체 화면)

@@ -61,8 +61,8 @@
 </main>
 </div>
 <script type="module">
-import { setAvatar } from './js/common.js';
-import { character as c, world, faces } from './js/config.js';
+import { setAvatar } from './js/common.js?v=5';
+import { character as c, world, faces } from './js/config.js?v=5';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 $('pic').src = c.image;
