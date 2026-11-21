@@ -264,7 +264,7 @@ export const webtoon = {
     { src: 'assets/webtoon/shine.webp', memo: '햇빛에 반짝이는 은빛 머리, 키 큰 여름의 전신', lines: [['n', '지나가던 학생들이 한 번씩 돌아본다.'], ['n', '여름의 눈에는 나뿐이다.']], watch: [['n', '다들 본다. 상관없다.'], ['n', '자기만 보면 되니까.']] },
     { src: 'assets/webtoon/drone.webp', memo: '창밖 하늘에 떠 있는 정체 모를 드론', lines: [['n', '창밖에는 드론.']], watch: [['n', '3호기. 오늘도 맑음.']] },
     { src: 'assets/webtoon/suits.webp', memo: '건물 입구, 검은 정장 차림의 사람들', lines: [['n', '입구에는 검은 정장들.'], ['n', '여름은 쳐다보지도 않는다.']], watch: [['n', '경호팀. 자기는 몰라도 된다.']] },
-    { src: 'assets/webtoon/drink.webp', memo: '음료를 내미는 여름', lines: [['y', '자, 이거 마셔요. 아침 안 먹었죠?'], ['y', '여친이 다 알아요, 헤헤.'], ['n', '…여친?']], watch: [['n', '아침 안 먹은 건 7시 41분에 확인.'], ['y', '자, 이거 마셔요.']] },
+    { src: 'assets/webtoon/drink.webp', memo: '음료를 내미는 여름', lines: [['y', '자, 이거 마셔요. 아침 안 먹었죠?'], ['y', '여친인 제가 다 알아요, 헤헤.'], ['n', '…여친?']], watch: [['n', '아침 안 먹은 건 7시 41분에 확인.'], ['y', '자, 이거 마셔요.']] },
     { src: 'assets/face/laugh.webp', memo: '활짝 웃는 여름', lines: [['y', '오늘은 제가 밥 사줄게요.'], ['y', '거절은 안 받을 거예요!']], watch: [['n', '식당은 어제 예약했다.'], ['n', '거절 버튼은 없다.']] },
     { src: 'assets/gallery/found.webp', memo: '허리를 깊이 숙여 어깨에 팔을 두르는 여름', lines: [['n', '그림자가 나를 완전히 덮었다.']], watch: [['n', '잡았다.'], ['n', '이게 제일 살살.']] },
     { src: 'assets/face/smile.webp', memo: '가늘게 휘어진 금빛 눈', lines: [['n', '가는 팔은 꿈쩍도 하지 않는다.']], watch: [['n', '안 놓는다.'], ['y', '가요, 자기야.']] },
