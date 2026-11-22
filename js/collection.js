@@ -1,7 +1,7 @@
 // 수집품 전시실: 진열장 하나에 고른 수집품을 올려 보여줍니다. 모델은 Blender로 만든 .glb.
 import * as THREE from '../vendor/three.module.js';
 import { GLTFLoader } from '../vendor/loaders/GLTFLoader.js';
-import { t } from './config.js?v=c83e6e22';
+import { t } from './config.js?v=5bdc801e';
 
 const std = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, metalness: 0, ...o });
 const BASE_Y = 1.88; // 수집품이 떠 있는 높이

@@ -1,6 +1,6 @@
 import * as THREE from '../vendor/three.module.js';
 import { GLTFLoader } from '../vendor/loaders/GLTFLoader.js';
-import { t } from './config.js?v=c83e6e22';
+import { t } from './config.js?v=5bdc801e';
 
 const std = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.85, metalness: 0, ...o });
 function box(w, h, d, color, x = 0, y = 0, z = 0, o) {

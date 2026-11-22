@@ -1,6 +1,6 @@
 // ★ 이 파일만 고치면 사이트 전체가 바뀝니다. (한국어 원본. 일본어는 ja.js, 영어는 en.js에 같은 모양으로 글자만 적습니다.)
-import ja from './ja.js?v=c83e6e22';
-import en from './en.js?v=c83e6e22';
+import ja from './ja.js?v=5bdc801e';
+import en from './en.js?v=5bdc801e';
 
 // 지금 언어 (theme.js가 <html lang>에 적어 둠). T는 그 언어의 문구 묶음, 한국어면 비어 있음.
 const T = { ja, en }[document.documentElement.lang] || null;

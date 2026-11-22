@@ -1,5 +1,5 @@
-import { site, character, faces, faceDefault, lang, t } from './config.js?v=c83e6e22';
-import { initHidden } from './hidden.js?v=c83e6e22';
+import { site, character, faces, faceDefault, lang, t } from './config.js?v=5bdc801e';
+import { initHidden } from './hidden.js?v=5bdc801e';
 
 const pages = [['index.html', '청첩장'], ['profile.html', '신부 소개'], ['room.html', '신혼집'], ['collection.html', '수집품'], ['chat.html', '연락하기'], ['gallery.html', '갤러리'], ['webtoon.html', '웹툰']];
 const here = location.pathname.split('/').pop() || 'index.html';

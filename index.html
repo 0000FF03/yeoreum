@@ -16,9 +16,9 @@
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="css/style.css?v=c83e6e22">
-<link rel="stylesheet" href="css/wall.css?v=c83e6e22">
-<script src="js/theme.js?v=c83e6e22"></script>
+<link rel="stylesheet" href="css/style.css?v=5bdc801e">
+<link rel="stylesheet" href="css/wall.css?v=5bdc801e">
+<script src="js/theme.js?v=5bdc801e"></script>
 </head>
 <body>
 <div class="sheet">
@@ -93,10 +93,10 @@
 </main>
 </div>
 <script type="module">
-import './js/common.js?v=c83e6e22';
-import { character as c, gallery, invite, hidden, wall, fmt } from './js/config.js?v=c83e6e22';
-import { mountScene } from './js/wallpaper.js?v=c83e6e22';
-import { onTheme, trigger, isWatch } from './js/hidden.js?v=c83e6e22';
+import './js/common.js?v=5bdc801e';
+import { character as c, gallery, invite, hidden, wall, fmt } from './js/config.js?v=5bdc801e';
+import { mountScene } from './js/wallpaper.js?v=5bdc801e';
+import { onTheme, trigger, isWatch } from './js/hidden.js?v=5bdc801e';
 const $ = (s) => document.getElementById(s);
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 mountScene($('wall'), wall);          // 표지: 움직이는 신부 일러스트 (누르면 전체 화면)
@@ -130,7 +130,8 @@ const cells = units.map(([u]) => { const d = mk('div'); const b = mk('b', '', '0
 function tick() {
   let ms = Math.max(0, target - Date.now());
   units.forEach(([, size], i) => { const v = Math.floor(ms / size); cells[i].textContent = i ? String(v).padStart(2, '0') : v; ms -= v * size; });
-  const left = Math.ceil((target - Date.now()) / 86400000);
+  const now = new Date();
+  const left = target <= now || now.toDateString() === target.toDateString() ? 0 : Math.max(1, Math.floor((target - now) / 86400000)); // 위 숫자(DAYS)와 같은 값
   const [pre, num, post] = fmt.dday(invite.bride.name, invite.groom.name, left);
   $('dday').replaceChildren(pre, mk('b', '', num), post);
 }

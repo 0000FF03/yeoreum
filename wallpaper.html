@@ -15,8 +15,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#fffdf8">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/wall.css?v=c83e6e22">
-<script src="js/theme.js?v=c83e6e22"></script>
+<link rel="stylesheet" href="css/wall.css?v=5bdc801e">
+<script src="js/theme.js?v=5bdc801e"></script>
 <style>
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; overflow: hidden; background: #0d0f0c; }
@@ -27,6 +27,7 @@
   .back { position: fixed; z-index: 5; left: max(12px, env(safe-area-inset-left)); top: max(12px, env(safe-area-inset-top)); padding: 6px 14px; border: 1px solid rgba(255, 255, 255, .55); color: #fff;
     font: 14px 'Gowun Batang', 'Nanum Myeongjo', serif; text-decoration: none; letter-spacing: .06em; background: rgba(30, 24, 16, .28); backdrop-filter: blur(6px); }
   .back:hover { background: rgba(255, 255, 255, .22); }
+  :root[data-i18n="wait"] .back { visibility: hidden; }
   :root[data-theme="watch"] .fill { filter: blur(34px) grayscale(.7) brightness(.25); }
 </style>
 </head>
@@ -35,8 +36,8 @@
 <div class="stage wall" id="stage"></div>
 <a class="back" id="back" href="index.html">← 청첩장</a>
 <script type="module">
-import { wall, site, t } from './js/config.js?v=c83e6e22';
-import { mountScene } from './js/wallpaper.js?v=c83e6e22';
+import { wall, site, t } from './js/config.js?v=5bdc801e';
+import { mountScene } from './js/wallpaper.js?v=5bdc801e';
 mountScene(document.getElementById('stage'), wall);
 document.title = `${t('신부')} | ${site.title}`;
 document.getElementById('back').textContent = '← ' + t('청첩장');

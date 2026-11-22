@@ -11,21 +11,21 @@ export default {
 
   character: {
     name: 'Han Yeoreum',
-    hero: ['Run all you like, darling.', "It's no use♡"],
+    hero: ['Run all you like, darling.', 'It’s no use♡'],
     tagline: 'An endlessly positive yandere senpai who has called you “darling” since day one',
     facts: [
       ['Age', '22 (your senpai by a year or two)'],
       ['School', 'Sports science · ace of the university judo club'],
       ['Height', 'A little over 190 cm (about 6′3″)'],
-      ['Family', 'Youngest daughter of a chaebol family (she never shows it)'],
+      ['Family', 'Youngest daughter of a conglomerate family (she never shows it)'],
       ['Calls you', '“Darling”'],
-      ['Verbal tics', 'Bright, polite speech, “See?!” and “Hehe”'],
+      ['Verbal tics', 'Polite and bubbly: “…right?!” and “Hehe”'],
       ['Looks', 'Long silver waves with pink tips, golden eyes with slit pupils, a mole under one eye, sharp little fangs'],
       ['Usual outfit', 'Cream sleeveless knit + dark brown long skirt'],
       ['Detail', 'A bracelet on each wrist (one has your initials)'],
     ],
     habits: ['She always carries your favorite drink and snack.', 'She remembers everything you say and returns it days later as a gift or a gesture.', 'She quietly slips her own things in among yours.', 'She has a wedding date, a newlywed home and baby names, all decided on her own.', 'She always carries a ring, ready to propose.'],
-    tags: ['yandere', 'obsessive', 'endlessly positive', 'senpai', 'chaebol heiress', 'campus', 'comedy'],
+    tags: ['yandere', 'obsessive', 'endlessly positive', 'senpai', 'heiress', 'campus', 'comedy'],
     traits: [
       ['Endless positivity', 'Annoyance, sighs, running away: she reads all of it as “cute.”'],
       ['Size gap', 'Those slender arms lift you right off the ground. “I’m holding you gently” is sincere.'],
@@ -49,7 +49,7 @@ export default {
   invite: {
     dateText: 'Sunday, July 18, 2027 · 12 noon',
     place: 'The garden of our new home (the location is a secret)',
-    bride: { role: 'Bride', name: 'Han Yeoreum', desc: 'Chaebol heiress · judo club ace' },
+    bride: { role: 'Bride', name: 'Han Yeoreum', desc: 'Conglomerate heiress · judo club ace' },
     groom: { role: 'Groom', name: 'Darling', desc: 'Doesn’t know yet' },
     greeting: [
       'From the day we first met,',
@@ -76,12 +76,12 @@ export default {
     ],
     way: [
       ['Venue', 'The garden of our new home (the location is a secret)'],
-      ['Transport', 'I’ll come get you. I already know where you are.'],
+      ['Ride', 'I’ll come get you. I already know where you are.'],
       ['Parking', 'The security cars are standing by.'],
       ['Escape', 'No.'],
     ],
     gift: [
-      ['Bride’s side', 'Han Yeoreum', 'No account needed (chaebol)'],
+      ['Bride’s side', 'Han Yeoreum', 'No bank account needed (I’m an heiress)'],
       ['Groom’s side', 'Darling', 'Just give me your heart'],
     ],
     giftReply: 'Already received. On the day we first met ♡',
@@ -108,11 +108,11 @@ export default {
       ['Reporting her', 'A sign of interest'],
       ['Ignoring her', 'Playing hard to get'],
     ],
-    watch: ['GPS tags', 'Location history and social media checks', 'Campus CCTV', 'A drone in the sky', 'Bodyguards in the background', 'Befriending your friends for information'],
+    watch: ['GPS tags', 'Location history and social media checks', 'Campus CCTV', 'A drone in the sky', 'Bodyguards tailing you in secret', 'Befriending your friends for information'],
     watchNote: 'All of it “because I was worried.”',
     timeline: [
       ['First meeting', 'She called you “darling” from the very first day. You never dated, though.'],
-      ['Running is tag', 'Running away is no use. She is far ahead in size, strength and money.'],
+      ['Running away is just tag', 'Running away is no use. She is far ahead in size, strength and money.'],
       ['The one who remembers', 'She remembers everything you say and gives it back days later as a gift.'],
       ['Now', 'A bracelet with your initials on her wrist. Today, too, she is waiting with your favorite drink.'],
     ],
@@ -160,7 +160,7 @@ export default {
     enter: {
       rsvp: ['You pressed it six times.', '…That’s okay. I’ll press the buttons from now on.'],
       night: ['Why are you still up at this hour, darling?', '…I was up watching, too.'],
-      visits: ['Back again. That makes {n}.', 'I’ve been counting. Since the first one.'],
+      visits: ['Back again. That makes {n} visits.', 'I’ve been counting. Since the first one.'],
       away: ['Where did you go?', '…Is someone in the other tab? Just give me a name.'],
       drone: ['Does the drone bother you that much?', '…You’re right, it’s not a bird. It’s watching you.'],
       chat: ['Did you say everything you wanted to?', 'Then it’s my turn now. Hehe.'],
@@ -204,12 +204,12 @@ export default {
   wall: { label: 'Han Yeoreum in a wedding dress, holding a bouquet' },
 
   gallery: [
-    { title: 'Proposal practice, take seventeen' },
-    { title: 'I’ve memorized everything you like to eat' },
-    { title: 'Choosing a dress! No peeking' },
-    { title: 'All taken by pure coincidence' },
-    { title: 'Practice is over, time to go see darling' },
-    { title: 'It takes stamina to carry you' },
+    { title: 'Proposal practice, take 17' },
+    { title: 'I know all your favorites' },
+    { title: 'Dress shopping! No peeking' },
+    { title: 'All taken by coincidence' },
+    { title: 'Practice done, off to see you' },
+    { title: 'Training to carry you' },
     { title: 'Come here, I won’t let go' },
     { title: 'Found you' },
     { title: 'Your side is the left' },
@@ -307,7 +307,7 @@ export default {
     '드래그해서 둘러보세요': 'Drag to look around',
     '번호를 눌러보세요': 'Tap a number',
     '신혼집 곳곳에 신부의 준비가 숨어 있어요. 우연히요.': 'The bride’s preparations are hidden all over the house. By coincidence.',
-    '자기': 'YOU',
+    '자기': 'Darling',
     // 웹툰
     '청첩장으로 돌아가기': 'Back to the invitation',
     '그리는 중': 'In progress',

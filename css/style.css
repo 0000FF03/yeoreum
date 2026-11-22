@@ -62,7 +62,7 @@ nav a.on { color: var(--ink); border-bottom-color: var(--gold); }
 .sign b { color: var(--ink); font-family: var(--serif); font-size: 17px; margin-left: 6px; }
 
 /* 신랑 신부 */
-.couple { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.couple { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .person { border: 1px solid var(--line); padding: 24px 10px 20px; background: var(--paper); }
 .person small { display: block; font-size: 12px; letter-spacing: .3em; color: var(--gold); }
 .person b { display: block; font-family: var(--serif); font-size: 24px; margin: 4px 0 2px; }
@@ -123,7 +123,7 @@ nav a.on { color: var(--ink); border-bottom-color: var(--gold); }
 .tags { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
 .tags span { font-size: 13px; color: var(--mute); border: 1px solid var(--line); padding: 1px 10px; }
 /* 신부의 표정 */
-.faces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: left; }
+.faces { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: left; }
 .faces figure { margin: 0; border: 1px solid var(--line); background: var(--paper); }
 .faces .pic { overflow: hidden; background: #fff; }
 .faces img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transform: scale(1.5); }
@@ -132,9 +132,9 @@ nav a.on { color: var(--ink); border-bottom-color: var(--gold); }
 .faces span { display: block; font-size: 12px; line-height: 1.55; color: var(--mute); }
 @media (max-width: 420px) { .faces { grid-template-columns: 1fr 1fr; } }
 :root[data-theme="watch"] .faces img { filter: grayscale(.7) contrast(1.1) brightness(.75); }
-.traits { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; }
+.traits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; text-align: left; }
 .traits div { border: 1px solid var(--line); border-top: 2px solid var(--gold); padding: 16px 14px; background: var(--paper); }
-.traits b { display: block; font-family: var(--serif); font-size: 17px; color: var(--rose); margin-bottom: 4px; }
+.traits b { display: block; overflow-wrap: anywhere; font-family: var(--serif); font-size: 17px; color: var(--rose); margin-bottom: 4px; }
 .traits p { font-size: 14px; color: var(--mute); line-height: 1.7; }
 .trans { max-width: 380px; margin: 0 auto; display: grid; gap: 2px; }
 .trans div { display: flex; align-items: baseline; gap: 8px; padding: 6px 0; }
@@ -302,3 +302,8 @@ header.top .in { position: relative; }
 :root:lang(ja) body { word-break: normal; line-break: strict; }
 @supports (word-break: auto-phrase) { :root:lang(ja) body { word-break: auto-phrase; } }
 :root:lang(en) .sec h2 { letter-spacing: .06em; }
+/* 영어: 긴 낱말이 칸을 넘지 않게 */
+:root:lang(en) .names { letter-spacing: .03em; gap: 10px; font-size: clamp(21px, 6.6vw, 26px); }
+:root:lang(en) .person b, :root:lang(ja) .person b { font-size: clamp(15px, 4.9vw, 20px); }
+:root:lang(ja) .faces span { word-break: normal; overflow-wrap: anywhere; }
+:root:lang(en) .way div { grid-template-columns: 76px 1fr; }
